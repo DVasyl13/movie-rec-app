@@ -1,0 +1,31 @@
+<div th:fragment="reg-log-popups">
+    <div id="background-popup"></div>
+    <div class="login-popup">
+        <div id="login-form">
+            <span class="material-icons" id="close-login-button">close</span>
+            <h2>Login</h2>
+            <input type="email" class="input-field" name="email" id="email" placeholder="Email">
+            <input type="password" class="input-field" name="password" id="password" placeholder="Password">
+            <label id="login-label"></label>
+            <button id="login-popup-button">Sign in</button>
+            <button id="registration-popup-button">Registration</button>
+        </div>
+
+    </div>
+
+    <div class="registration-popup">
+        <div id="registration-form">
+            <span class="material-icons" id="close-registration-button">close</span>
+            <h2>Registration</h2>
+            <input type="text" class="input-field" name="name" id="registration-name" placeholder="Username">
+            <input type="email" class="input-field" name="email" id="registration-email" placeholder="Email">
+            <input type="password" class="input-field" name="password" id="registration-password" placeholder="Password">
+            <input type="password" class="input-field" name="repeat-password" id="repeat-password"
+                   placeholder="Password confirmation">
+            <label id="registration-label"></label>
+            <button id="create-account-button">Register</button>
+            <button id="login-form-button">Sign in</button>
+        </div>
+    </div>
+
+</div>

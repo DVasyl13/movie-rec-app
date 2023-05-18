@@ -1,0 +1,146 @@
+.login-popup{
+    background-color: #F4EEE0;
+    padding: 30px 40px;
+    position: fixed;
+    width: 400px;
+    height: 369px;
+    top: -150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 22px;
+    opacity: 0;
+    text-align: center;
+    transition: all 0.7s ease;
+    z-index: 10;
+}
+
+.registration-popup{
+    background-color: #F4EEE0;
+    padding: 42px 20px 0 20px;
+    position: fixed;
+    width: 515px;
+    height: 538px;
+    top: -150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.7s ease;
+    border-radius: 22px;
+    text-align: center;
+    z-index: 10;
+}
+.active{
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    top: 50%;
+}
+
+#login-form, #registration-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 1;
+}
+
+#login-form h2, #registration-form h2{
+    margin: 12px;
+    color: #4F4557;
+}
+
+.input-field{
+    width: 80%;
+    margin: 12px auto;
+    border: 2px solid #4F4557;
+    border-radius: 42px;
+    padding: 12px;
+    font-size: 20px;
+    background: #F4EEE0;
+}
+#login-form input::placeholder, #registration-form input::placeholder{
+    padding: 15px;
+    font-size: 19px;
+    opacity: 0.8;
+
+}
+
+#login-popup-button{
+    background-color: #4F4557;
+    color: #F4EEE0;
+    border-style: none;
+    border-radius: 50px;
+    font-size: larger;
+    padding: 12px 25px;
+    width: 230px;
+    height: 60px;
+    margin: 12px auto;
+    cursor: pointer;
+}
+#create-account-button{
+    background-color: #4F4557;
+    color: #F4EEE0;
+    border-style: none;
+    border-radius: 50px;
+    font-size: larger;
+    padding: 12px 25px;
+    width: 250px;
+    height: 60px;
+    margin: 12px auto;
+    cursor: pointer;
+}
+#login-form-button{
+    font-size: 1.1em;
+    background: 0;
+    border:0 none; !important;
+    color: #4F4557;
+    font-weight: bold;
+    margin: 10px 20px;
+    cursor: pointer;
+}
+
+#registration-popup-button{
+    font-size: 1.1em;
+    background: 0;
+    border: 0;
+    margin: 10px 20px;
+    color: #4F4557;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#background-popup{
+    top:0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    background-color: rgba(79, 69, 87, 0.44);
+    transition-delay: 0.35s;
+    transition: 0.3s;
+    z-index: 10;
+    opacity: 1;
+
+}
+
+.login-popup #close-button{
+    position: absolute;
+    top: 25px;
+    right:25px;
+    font-size: 30px;
+    cursor: pointer;
+}
+#close-login-button, #close-registration-button{
+    color: #4F4557;
+    position: absolute;
+    top: 30px;
+    right:30px;
+    font-size: 30px;
+    cursor: pointer;
+}
+#login-label,#registration-label{
+    color: red;
+    font-size: 20px;
+}
+
+.registration-popup h2{
+    margin-bottom: 16px;
+}

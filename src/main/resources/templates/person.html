@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="/css/styling.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="/css/movie.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <title>What to Watch</title>
+</head>
+<body>
+<header th:insert="~{block/header :: header}"></header>
+<div th:insert="~{block/reg-log-popups :: reg-log-popups}"></div>
+<div class="movie-page-container">
+    <div class="container-content">
+        <div class="left-container">
+            <div class="left-container-content">
+                <img src="https://m.media-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_FMjpg_UX1000_.jpg">
+                <button id="like-btn" class="btn"><span class="material-symbols-outlined">favorite</span>Like</button>
+                <button id="ignore-btn" class="btn"><span class="material-symbols-outlined">close</span>Ignore</button>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="right-container-top">
+                <div class="right-container-top-content">
+                    <div class="movie-title">
+                        <p id="title">Bladerunner 2049. 2017</p>
+                    </div>
+                </div>
+            </div>
+            <div class="movie-description">
+                <p><span>Role:</span> Actor, Producer, Director</p>
+                <p><span>Birthday:</span> 1956-01-03</p>
+                <p><span>Awards:</span> Won 2 Oscars | 44 wins & 43 nominations total</p>
+                <p><span>Height:</span> 5′ 9¾″ (1.77 m)</p>
+                <p><span>Death-day:</span> (optional)</p>
+
+                <p class="movie-plot">Mel Gibson. Actor: Braveheart. Mel Columcille Gerard Gibson was born January 3,
+                    1956 in Peekskill, New York, USA, as the sixth of eleven children of Hutton Gibson, a railroad
+                    brakeman, and Anne Patricia (Reilly) Gibson (who died in December of 1990). His mother was Irish,
+                    from County Longford, while his American-born father is of mostly Irish descent.\n\nMel and his
+                    family moved to Australia in the late 1960s, settling in New...</p>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="empty-div"></div>
+    </div>
+    <div class="bottom-container">
+        <div class="cast-container">
+            <div class="title">
+                <p>Know for:</p>
+            </div>
+            <div class="cast-card-container">
+                <a href="/person.html">
+                    <div class="person-card">
+                        <div class="card">
+                            <img src="https://imdb-api.com/images/original/nopicture.jpg">
+                        </div>
+                        <div class="person-description">
+                            <p>Jerome Patrick Hoban</p>
+                            <p>as "Ed Sullivan"</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/person.html">
+                    <div class="person-card">
+                        <div class="card">
+                            <img src="https://imdb-api.com/images/original/nopicture.jpg">
+                        </div>
+                        <div class="person-description">
+                            <p>Jerome Patrick Hoban</p>
+                            <p>as "Ed Sullivan"</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/person.html">
+                    <div class="person-card">
+                        <div class="card">
+                            <img src="https://imdb-api.com/images/original/nopicture.jpg">
+                        </div>
+                        <div class="person-description">
+                            <p>Jerome Patrick Hoban</p>
+                            <p>as "Ed Sullivan"</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="/person.html">
+                    <div class="person-card">
+                        <div class="card">
+                            <img src="https://imdb-api.com/images/original/nopicture.jpg">
+                        </div>
+                        <div class="person-description">
+                            <p>Jerome Patrick Hoban</p>
+                            <p>as "Ed Sullivan"</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="~{block/footer :: footer}"></footer>
+<script src="/js/header.js"></script>
+</body>
+</html>

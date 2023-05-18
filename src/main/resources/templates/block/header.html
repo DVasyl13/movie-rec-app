@@ -1,0 +1,15 @@
+<div th:fragment="header" class="header">
+    <div class="nav">
+        <a class="nav-element" th:href="@{/movie/all}">Movies</a>
+        <a class="nav-element" th:href="@{/movie/for-you}">For you</a>
+        <a class="nav-element" th:href="@{/movie/saved}">Saved</a>
+        <div class="search-bar-container">
+            <form action="" class="search-bar">
+                <input type="text" placeholder="Search.." name="q">
+                <button type="submit"><img src="/img/search.png" alt="search"></button>
+            </form>
+        </div>
+        <button class="log-btn">Login</button>
+        <a hidden id="user-button" th:href="@{/account}"></a>
+    </div>
+</div>
