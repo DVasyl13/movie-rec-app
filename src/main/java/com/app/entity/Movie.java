@@ -1,24 +1,23 @@
 package com.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "movie")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"movieDetails"})
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "imdb_id", nullable = false)
-    private String imdbId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -26,8 +25,11 @@ public class Movie {
     @Column(name = "image", nullable = false)
     private String image;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "movie_movie_details_FK"))
+    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY)
     private MovieDetails movieDetails;
+
+    public void setMovieDetails(MovieDetails movieDetails) {
+        this.movieDetails = movieDetails;
+        this.movieDetails.setMovie(this);
+    }
 }

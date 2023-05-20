@@ -5,18 +5,17 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "movie_details")
 @Getter @Setter
-@ToString @EqualsAndHashCode
+@ToString(exclude = {"directors", "actors", "writers", "genres", "movies"})
+@EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor
 public class MovieDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "year", nullable = false)
@@ -30,9 +29,6 @@ public class MovieDetails {
 
     @Column(name = "plot", nullable = false, length = 1024)
     private String plot;
-
-    @Column(name = "genres")
-    private String genres;
 
     @Column(name = "awards")
     private String awards;
@@ -64,34 +60,53 @@ public class MovieDetails {
     @Column(name = "worldwide_gross")
     private String worldwideGross;
 
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_details_director",
             joinColumns = { @JoinColumn(name = "movie_details_id") },
             inverseJoinColumns = { @JoinColumn(name = "director_id") }
     )
+    @JsonManagedReference
     private Set<Director> directors = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_details_actor",
             joinColumns = { @JoinColumn(name = "movie_details_id") },
             inverseJoinColumns = { @JoinColumn(name = "actor_id") }
     )
+    @JsonManagedReference
     private Set<Actor> actors = new HashSet<>();
 
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_details_writer",
             joinColumns = { @JoinColumn(name = "movie_details_id") },
             inverseJoinColumns = { @JoinColumn(name = "writer_id") }
     )
+    @JsonManagedReference
     private Set<Writer> writers = new HashSet<>();
 
 
-    @OneToOne(mappedBy = "movieDetails")
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "movie_details_genres",
+            joinColumns = { @JoinColumn(name = "movie_details_id") },
+            inverseJoinColumns = { @JoinColumn(name = "genre_id") }
+    )
+    @JsonManagedReference
+    private Set<Genre> genres = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "movie_details_similar_movies",
+            joinColumns = { @JoinColumn(name = "movie_details_id") },
+            inverseJoinColumns = { @JoinColumn(name = "id") }
+    )
+    @JsonManagedReference
+    private Set<SimilarMovie> movies = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
 }

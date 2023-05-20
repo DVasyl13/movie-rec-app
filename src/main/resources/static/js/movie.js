@@ -48,5 +48,6 @@ async function getMovieDetailsFromApi(id) {
 }
 
 function setMovieDetails(data) {
+    console.log(data);
 
 }

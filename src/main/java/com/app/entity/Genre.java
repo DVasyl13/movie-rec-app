@@ -1,9 +1,7 @@
 package com.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,20 +10,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "writer")
-@Setter
-@Getter
-@EqualsAndHashCode
-@ToString(exclude = {"movies"})
-public class Writer {
+@Table(name = "genre")
+@Getter @Setter
+@ToString(exclude = {"movieDetails"})
+public class Genre {
     @Id
-    private Long id;
+    @Column(length = 64)
+    private String id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "writers")
+    @ManyToMany(mappedBy = "genres")
     @JsonBackReference
-    private Set<MovieDetails> movies = new HashSet<>();
-
+    Set<MovieDetails> movieDetails = new HashSet<>();
 }

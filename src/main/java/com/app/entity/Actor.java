@@ -1,6 +1,8 @@
 package com.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,15 +15,11 @@ import java.util.Set;
 @Entity
 @Table(name = "actor")
 @Setter
-@Getter @EqualsAndHashCode
-@ToString
+@Getter
+@ToString(exclude = {"movies"})
 public class Actor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "imdb_id")
-    private String imdbId;
 
     @Column(name = "name", nullable = false)
     private String name;

@@ -2,8 +2,11 @@ package com.app.service;
 
 import com.app.dto.MovieDto;
 import com.app.entity.Movie;
+import com.app.entity.MovieDetails;
 import com.app.exception.EmptyResponseFromApiException;
+import com.app.repository.MovieDetailsRepository;
 import com.app.repository.MovieRepository;
+import com.app.util.IdMapper;
 import com.app.util.MovieMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -13,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,31 +29,34 @@ public class MovieService {
     @PersistenceContext
     private final EntityManager entityManager;
     private final MovieRepository movieRepository;
+    private final MovieDetailsRepository movieDetailsRepository;
     private final RestTemplate restTemplate;
 
     @Transactional
-    public Movie getFullMovie(String imdbId) {
-        Movie movie = movieRepository.findMovieByImdbId(imdbId);
-        if (movie != null) {
-            return movie;
+    public MovieDto getFullMovie(String imdbId) {
+        Optional<Movie> movie = movieRepository.findById(IdMapper.getLongFromString(imdbId));
+        if (movie.isPresent()) {
+            Optional<MovieDetails> movieDetails = movieDetailsRepository.findById(IdMapper.getLongFromString(imdbId));
+            return changeIdToIMDbStyle(movieDetails.get());
         }
 
-        movie = getFullMovieFromApi(imdbId);
-        System.out.println(movie);
-        entityManager.merge(movie);
-        return movie;
+        MovieDto movieDto = getFullMovieFromApi(imdbId);
+        entityManager.merge(MovieMapper.mapMovieDtoToMovieDetails(movieDto));
+        return movieDto;
     }
 
-    private Movie getFullMovieFromApi(String imdbId) {
+    private MovieDto getFullMovieFromApi(String imdbId) {
         ResponseEntity<MovieDto> response
                 = restTemplate.getForEntity("https://imdb-api.com/en/API/Title/"+apiKey+"/"+imdbId+"/Trailer,", MovieDto.class);
         MovieDto movieJson = response.getBody();
-        System.out.println("from getFullMovieFromApi:");
-        System.out.println(movieJson);
-        System.out.println("");
         if (movieJson != null) {
-            return MovieMapper.mapMovieDtoToMovie(movieJson);
+            return movieJson;
         }
         throw new EmptyResponseFromApiException("ResponseEntity<MovieDto> response is empty.");
     }
+
+    private MovieDto changeIdToIMDbStyle(MovieDetails movie) {
+        return MovieMapper.mapMovieToMovieDto(movie);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.app.controller.api;
 
+import com.app.dto.MovieDto;
 import com.app.entity.Movie;
 import com.app.service.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class MovieRestController {
 
     @GetMapping
     @RequestMapping("/{id}")
-    public Movie getSomething(@PathVariable(name = "id") String id) {
+    public MovieDto getMovie(@PathVariable(name = "id") String id) {
         return movieService.getFullMovie(id);
     }
 

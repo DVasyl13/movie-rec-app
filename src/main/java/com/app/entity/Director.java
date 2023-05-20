@@ -1,6 +1,7 @@
 package com.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,15 +11,11 @@ import java.util.Set;
 @Entity
 @Table(name = "director")
 @Getter @Setter
-@ToString @EqualsAndHashCode
+@ToString(exclude = {"movies"})
 @NoArgsConstructor
 public class Director {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "imdb_id")
-    private String imdbId;
 
     @Column(name = "name", nullable = false)
     private String name;
