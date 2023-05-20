@@ -1,25 +1,16 @@
 const searchBar = document.querySelector('.search-bar input');
-const dropDownMenu = document.querySelector(".dropdown-menu");
+let dropDownMenu;
 const apiKey = 'k_h5a19iwm';
 let typingTimer;
-const typingDelay = 1000; // milliseconds delay after user stops typing
+const typingDelay = 1300; // milliseconds delay after user stops typing
 
-searchBar.addEventListener('input', () => {
-    if (searchBar.value.length > 0) {
-        dropDownMenu.style.display = 'block';
-        search();
-    } else {
-        dropDownMenu.style.display = 'none';
-    }
-});
+
 searchBar.addEventListener('input', function (event) {
-    if (searchBar.value.length > 0) {
-        dropDownMenu.style.display = 'block';
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(search, typingDelay);
-    } else {
+    if (searchBar.value.length === 0) {
         dropDownMenu.style.display = 'none';
     }
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(search, typingDelay);
 });
 async function search() {
     const inputValue = searchBar.value.trim();
@@ -34,10 +25,13 @@ async function search() {
     }
 }
 function createDropDownMenu() {
-    dropDownMenu.innerHTML = "";
+    const dropDownMenu = document.createElement('div');
+    dropDownMenu.setAttribute('class', 'dropdown-menu');
+    document.querySelector('.search-bar').appendChild(dropDownMenu);
     const ul = document.createElement("ul");
     ul.setAttribute("class", "dropdown-menu-ul");
     dropDownMenu.appendChild(ul);
+    dropDownMenu.style.display = 'block';
     return ul;
 }
 function populateDropdownSearchMenu(data, ul) {

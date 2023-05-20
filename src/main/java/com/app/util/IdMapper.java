@@ -5,19 +5,13 @@ import com.app.dto.MovieDto;
 public class IdMapper {
 
     public static String getIMDbMovieId(Long id) {
-        String idString = String.valueOf(id);
-        int numDigits = idString.length();
-        String paddedId = String.format("%1$" + (9 - numDigits) + "s", idString)
-                .replace(' ', '0');
-        return "tt" + paddedId;
+        String numberString = String.format("%07d", id);
+        return "tt" + numberString;
     }
 
     public static String getIMDbPersonId(Long id) {
-        String idString = String.valueOf(id);
-        int numDigits = idString.length();
-        String paddedId = String.format("%1$" + (9 - numDigits) + "s", idString)
-                .replace(' ', '0');
-        return "nm" + paddedId;
+        String numberString = String.format("%07d", id);
+        return "nm" + numberString;
     }
 
     public static Long getLongFromString(String s) {

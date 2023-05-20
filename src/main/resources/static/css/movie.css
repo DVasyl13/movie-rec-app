@@ -81,7 +81,7 @@ p {
     font-size: 18px;
 }
 
-.movie-description span {
+.movie-description p span {
     color: #afabab;
 }
 
@@ -102,7 +102,7 @@ p {
 }
 
 .btn {
-    width: 62%;
+    width: 86%;
     background-color: #F4EEE0;
     border: none;
     height: 2.1rem;
@@ -149,15 +149,15 @@ p {
     background-color: #ccc8c0;
 }
 
-.left-container img {
-    margin-top: 5vh;;
-    width: 245px;
-    height: 326px;
+#movie-poster {
+    margin-top: 5vh;
+    width: 285px;
+    height: 366px;
     box-shadow: 1px 2px 3px 3px #2E2137;
 }
 
 .empty-div {
-    width: 30%;
+    width: 25%;
 }
 
 .bottom-container {
@@ -183,14 +183,15 @@ p {
 .movie-card-container, .cast-card-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 2rem;
 }
 
 .card img {
     box-shadow: 2px 2px 5px 5px #2E2137;
-    width: 219px;
-    height: 289px;
+    width: 229px;
+    height: 283px;
     border-radius: 8px;
 }
 
@@ -212,4 +213,106 @@ p {
 
 .person-description p {
     font-weight: normal;
+}
+
+@media screen and (max-width: 1200px ) and (min-width: 1000px){
+    .empty-div {
+        width: 20%;
+    }
+
+    .movie-card-container, .cast-card-container {
+        justify-content: center;
+    }
+    .title {
+        margin-left: 7.3rem;
+    }
+
+}
+
+@media screen and (max-width: 1000px ) and (min-width: 925px){
+    .empty-div {
+        width: 10%;
+    }
+    .movie-card-container, .cast-card-container {
+        justify-content: center;
+    }
+
+    .title {
+        margin-left: 3rem;
+    }
+}
+
+@media screen and (max-width: 925px ){
+    .empty-div {
+        width: 0;
+    }
+    .container-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .left-container-content img {
+        width: 465px;
+        height: 616px;
+    }
+
+    .btn {
+        width: 80%;
+        background-color: #F4EEE0;
+        border: none;
+        height: 2.5rem;
+        min-width: 245px;
+        font-weight: bold;
+        font-size: 18px;
+        border-radius: 12px;
+        transition: 0.2s;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .btn p {
+        color: #4F4557;
+        margin-right: 8px;
+    }
+
+    #title {
+        font-size: 32px;
+    }
+
+    .addition-content-element p {
+        font-size: 18px;
+    }
+
+    .movie-card-container, .cast-card-container {
+        justify-content: center;
+    }
+
+    .title {
+        margin-left: 3rem;
+    }
+}
+
+@media screen and (max-width: 550px){
+
+    .right-container-top {
+        margin-top: 5rem;
+    }
+    .left-container-content img {
+        width: 415px;
+        height: 576px;
+    }
+    .addition-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .addition-content-element {
+        justify-content: left;
+    }
 }

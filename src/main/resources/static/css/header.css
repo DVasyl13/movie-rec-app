@@ -103,7 +103,6 @@ a:link {
 a:hover {
     color: #d9d2cc;
 }
-
 .dropdown-menu {
     position: absolute;
     margin: 0 30% 0 39%;
@@ -127,6 +126,7 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     padding: 0;
     margin: 0;
     /*background-color: #fff;*/
@@ -135,7 +135,8 @@ a:hover {
 }
 
 .dropdown-menu-ul li {
-    padding: 10px;
+    width: 95%;
+    padding: 5px 10px 5px 10px;
     gap: 5px;
 }
 
@@ -147,7 +148,6 @@ a:hover {
 .dropdown-menu li:hover {
     background-color: #f1f1f1;
 }
-
 
 .log-btn, .user-button {
     margin-left: 5rem;
@@ -165,4 +165,32 @@ a:hover {
 
 .log-btn:active, .user-button:active {
     color: #c4bfbb;
+}
+
+@media screen  and (max-width: 1240px){
+    .nav {
+        gap: 3rem;
+    }
+    .log-btn {
+        margin-left: 4rem;
+    }
+}
+
+@media screen  and (max-width: 1140px){
+    .nav {
+        gap: 2rem;
+    }
+    .log-btn {
+        margin-left: 3rem;
+    }
+}
+
+@media screen  and (max-width: 750px){
+    .nav-element, .log-btn {
+        font-size: 16px;
+    }
+
+    .search-bar {
+        min-width: 260px;
+    }
 }
