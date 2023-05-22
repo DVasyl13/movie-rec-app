@@ -2,7 +2,7 @@ const searchBar = document.querySelector('.search-bar input');
 let dropDownMenu;
 const apiKey = 'k_h5a19iwm';
 let typingTimer;
-const typingDelay = 1300; // milliseconds delay after user stops typing
+const typingDelay = 1000; // milliseconds delay after user stops typing
 
 
 searchBar.addEventListener('input', function (event) {
@@ -166,13 +166,13 @@ const resisterNewUser = () => {
     createNewUser(data);
 }
 
-const createNewUser = (data) => {
+const createNewUser = (body) => {
     fetch('/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(body)
     })
         .then(response => {
             if (!response.ok) {
@@ -181,7 +181,7 @@ const createNewUser = (data) => {
             return response.json();
         })
         .then(data => {
-            setUserData(data, data.password);
+            setUserData(data, body.password);
             removePopUps();
         })
         .catch(error => {
@@ -218,13 +218,13 @@ const loginUser = () => {
     verifyUser(data);
 }
 
-const verifyUser = (input) => {
+const verifyUser = (body) => {
     fetch('/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(input)
+        body: JSON.stringify(body)
     })
         .then(response => {
             if (!response.ok) {
@@ -234,7 +234,7 @@ const verifyUser = (input) => {
         })
         .then(data => {
             document.getElementById('login-label').innerHTML='';
-            setUserData(data, input.password);
+            setUserData(data, body.password);
             removePopUps();
         })
         .catch(error => {
@@ -246,9 +246,10 @@ const verifyUser = (input) => {
 
 const setUserData = (response, password) => {
     sessionStorage.setItem('id', response.data.id);
-    sessionStorage.setItem('name', response.data.name);
+    sessionStorage.setItem('username', response.data.username);
     sessionStorage.setItem('password', password);
-    sessionStorage.setItem('email', response.data.email);
+    //sessionStorage.setItem('email', response.data.email);
+    sessionStorage.setItem('user', JSON.stringify(response.data))
     location.reload();
 }
 

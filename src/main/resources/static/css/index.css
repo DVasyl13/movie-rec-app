@@ -58,6 +58,7 @@
     filter: none;
     z-index: 10;
     transition: 0.2s ease;
+    min-width: 200px;
 }
 
 .content a:hover {
@@ -66,4 +67,13 @@
 
 .content a:active {
     background-color: #e1dbd0;
+}
+
+@media screen and (max-width: 1000px){
+    .content p {
+        font-size: 28px;
+    }
+    .content a {
+        font-size: 16px;
+    }
 }

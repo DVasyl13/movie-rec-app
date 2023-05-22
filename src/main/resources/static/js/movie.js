@@ -1,41 +1,159 @@
 import initializeHeader from "./header-initializer.js";
 
+const ignoreBtn = document.getElementById("ignore-btn");
+const likeButton = document.getElementById("like-btn");
+const watchedBtn = document.getElementById("watched-btn");
+let movieIMDbid;
+
 window.onload = () => {
     initializeHeader();
     initMovieDetails();
+    initUserDetails();
 }
 
-let likeButton = document.getElementById("like-btn");
-likeButton.addEventListener("click", function() {
-    likeButton.classList.toggle("btn-liked");
-});
+function isUserAuthorized() {
+    return sessionStorage.getItem('id') != null;
+}
 
-let ignoreBtn = document.getElementById("ignore-btn");
-ignoreBtn.addEventListener("click", function() {
-    const childSpan = ignoreBtn.childNodes.item(0);
-    if (childSpan.textContent === 'close') {
-        childSpan.textContent = 'done';
-    } else {
-        childSpan.textContent = 'close';
+function initUserDetails() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(user);
+    if (user.likedMovies.includes(movieIMDbid)) {
+        toggleLikeButton();
+    }
+    if (user.ignoredMovies.includes(movieIMDbid)) {
+        toggleIgnoreButton();
+    }
+    if (user.watchedMovies.includes(movieIMDbid)) {
+        toggleWatchedButton();
+    }
+}
+
+likeButton.addEventListener("click", function () {
+    if (isUserAuthorized()) {
+        doToggleToButton('liked');
+        toggleLikeButton();
+        removeIgnoredButton();
+        toggleLikedInCache();
+    } else  {
+        console.log("User is not authorized!")
     }
 });
 
-let watchedBtn = document.getElementById("watched-btn");
-watchedBtn.addEventListener("click", function() {
+ignoreBtn.addEventListener("click", function () {
+    if (isUserAuthorized()) {
+        doToggleToButton('ignored');
+        toggleIgnoreButton();
+        removeLikedButton();
+        toggleIgnoredInCache();
+    } else  {
+        console.log("User is not authorized!");
+    }
+});
+
+watchedBtn.addEventListener("click", function () {
+    if (isUserAuthorized()) {
+        doToggleToButton('watched');
+        toggleWatchedButton();
+        toggleWatchedInCache();
+    } else  {
+        console.log("User is not authorized!");
+    }
+});
+
+function toggleIgnoredInCache() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if(user.ignoredMovies.includes(movieIMDbid)){
+        user.ignoredMovies.splice(user.ignoredMovies.indexOf(movieIMDbid));
+    } else{
+        user.ignoredMovies.push(movieIMDbid);
+        user.likedMovies.splice(user.likedMovies.indexOf(movieIMDbid));
+    }
+    console.log(user);
+    sessionStorage.setItem('user', JSON.stringify(user));
+}
+
+function toggleLikedInCache() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if(user.likedMovies.includes(movieIMDbid)){
+        user.likedMovies.splice(user.likedMovies.indexOf(movieIMDbid));
+    }else{
+        user.likedMovies.push(movieIMDbid);
+        user.ignoredMovies.splice(user.ignoredMovies.indexOf(movieIMDbid));
+    }
+    console.log(user);
+    sessionStorage.setItem('user', JSON.stringify(user));
+}
+
+function toggleWatchedInCache() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if(user.watchedMovies.includes(movieIMDbid)){
+        user.watchedMovies.splice(user.watchedMovies.indexOf(movieIMDbid));
+    } else {
+        user.watchedMovies.push(movieIMDbid);
+    }
+    console.log(user);
+    sessionStorage.setItem('user', JSON.stringify(user));
+}
+
+
+function toggleWatchedButton() {
     const childSpan = watchedBtn.childNodes.item(0);
     if (childSpan.textContent === 'add') {
         childSpan.textContent = 'done';
     } else {
         childSpan.textContent = 'add';
     }
-});
+}
+
+function toggleIgnoreButton() {
+    const childSpan = ignoreBtn.childNodes.item(0);
+    childSpan.textContent === 'close' ?
+        childSpan.textContent = 'done'
+        : childSpan.textContent = 'close';
+}
+
+function toggleLikeButton() {
+    likeButton.classList.toggle("btn-liked");
+}
+
+function removeLikedButton() {
+    likeButton.classList.remove('btn-liked');
+}
+
+function removeIgnoredButton() {
+    ignoreBtn.childNodes.item(0).textContent = 'close';
+}
+
+async function doToggleToButton(buttonName) {
+    const body = {
+        id: sessionStorage.getItem('id'),
+        password: sessionStorage.getItem('password'),
+        movieId: movieIMDbid
+    };
+    try {
+        const response = await fetch('/api/v1/user/' + buttonName, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "PUT",
+            body: JSON.stringify(body)
+        });
+
+        const responseBody = await response.json();
+        //TODO: to do this
+        console.log(responseBody);
+    } catch (e) {
+        console.error("Error: " + e);
+    }
+}
 
 function initMovieDetails() {
     const href = location.href;
-    const movieIMDbid = href.substring(href.lastIndexOf('/') + 1);
+    movieIMDbid = href.substring(href.lastIndexOf('/') + 1);
     getMovieDetailsFromApi(movieIMDbid);
 }
-
 
 async function getMovieDetailsFromApi(id) {
     try {
@@ -43,7 +161,7 @@ async function getMovieDetailsFromApi(id) {
         const responseBody = await response.json();
         setMovieDetails(responseBody);
     } catch (e) {
-        console.error("Error: " + e );
+        console.error("Error: " + e);
     }
 }
 
@@ -51,7 +169,7 @@ function setMovieDetails(data) {
     console.log(data);
 
     const title = document.createElement('p');
-    title.setAttribute('id','title');
+    title.setAttribute('id', 'title');
     title.innerHTML = data.fullTitle;
     document.querySelector('.movie-title').appendChild(title);
 
@@ -70,7 +188,7 @@ function setMovieDetails(data) {
 
     const metaCriticImg = document.createElement('img');
     metaCriticImg.setAttribute('class', 'rating-icon');
-    metaCriticImg.src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Metacritic_logo.svg/2560px-Metacritic_logo.svg.png"
+    metaCriticImg.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Metacritic_logo.svg/2560px-Metacritic_logo.svg.png"
 
     const ratingRateMeta = document.createElement('p')
     ratingRateMeta.setAttribute('class', 'rating-rate');
@@ -101,7 +219,7 @@ function setMovieDetails(data) {
     const arrayOfDirectors = data.directorList.map((value) => {
         return value.name;
     });
-    pDirectors.textContent +=arrayOfDirectors.toString().replaceAll(',', ', ');
+    pDirectors.textContent += arrayOfDirectors.toString().replaceAll(',', ', ');
     movieDescription.appendChild(pDirectors);
 
     const pWrites = document.createElement('p');
@@ -111,7 +229,7 @@ function setMovieDetails(data) {
     const arrayOfWriters = data.writerList.map((value) => {
         return value.name;
     });
-    pWrites.textContent +=arrayOfWriters.toString().replaceAll(',', ', ');
+    pWrites.textContent += arrayOfWriters.toString().replaceAll(',', ', ');
     movieDescription.appendChild(pWrites);
 
     const pStudious = document.createElement('p');
@@ -128,7 +246,7 @@ function setMovieDetails(data) {
     const arrayOfGenres = data.genreList.map((value) => {
         return value.value;
     });
-    pGenres.textContent +=arrayOfGenres.toString().replaceAll(',', ', ');
+    pGenres.textContent += arrayOfGenres.toString().replaceAll(',', ', ');
     movieDescription.appendChild(pGenres);
 
     const pAwards = document.createElement('p');
@@ -156,7 +274,7 @@ function setMovieDetails(data) {
     const spanOwUsa = document.createElement('span');
     spanOwUsa.innerHTML = 'Opening weekend USA: ';
     pOwUsa.appendChild(spanOwUsa);
-    pOwUsa.textContent = data.boxOffice.openingWeekendUSA;
+    pOwUsa.textContent += data.boxOffice.openingWeekendUSA;
     movieDescription.appendChild(pOwUsa);
 
     const pCWG = document.createElement('p');
@@ -178,7 +296,7 @@ function setMovieDetails(data) {
     const movieCardContainer = document.querySelector('.movie-card-container');
     data.similars.forEach((movie) => {
         const a = document.createElement('a');
-        a.href = '/movie/'+ movie.id;
+        a.href = '/movie/' + movie.id;
         const cardDiv = document.createElement('div');
         cardDiv.setAttribute('class', 'card');
         const img = document.createElement('img');
@@ -192,7 +310,7 @@ function setMovieDetails(data) {
     const castCardContainer = document.querySelector('.cast-card-container');
     data.actorList.forEach((actor) => {
         const a = document.createElement('a');
-        a.href = '/person/'+ actor.id;
+        a.href = '/person/' + actor.id;
 
         const cardDiv = document.createElement('div');
         cardDiv.setAttribute('class', 'person-card');
@@ -207,7 +325,7 @@ function setMovieDetails(data) {
 
         const personDescription = document.createElement('div');
         personDescription.setAttribute('class', 'person-description');
-        const  p = document.createElement('p');
+        const p = document.createElement('p');
         p.innerHTML = actor.name;
         personDescription.appendChild(p);
         cardDiv.appendChild(actorDiv);

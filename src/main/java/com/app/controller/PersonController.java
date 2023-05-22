@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/person")
 @RequiredArgsConstructor
-public class Person {
+public class PersonController {
 
     @GetMapping
     @RequestMapping("/{id}")

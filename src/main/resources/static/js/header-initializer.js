@@ -8,7 +8,7 @@ const setAuthorizeButton = () => {
         document.getElementById('log-btn').hidden = true;
         const a = document.getElementById('user-button');
         a.hidden = false;
-        a.innerHTML = sessionStorage.getItem('name');
+        a.innerHTML = sessionStorage.getItem('username');
     }
 }
 

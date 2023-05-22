@@ -28,6 +28,18 @@ public class Movie {
     @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY)
     private MovieDetails movieDetails;
 
+    @ManyToMany(mappedBy = "watchedMovies")
+    @JsonBackReference
+    private Set<User> usersWatched = new HashSet<>();
+
+    @ManyToMany(mappedBy = "likedMovies")
+    @JsonBackReference
+    private Set<User> usersLiked = new HashSet<>();
+
+    @ManyToMany(mappedBy = "ignoredMovies")
+    @JsonBackReference
+    private Set<User> usersIgnored = new HashSet<>();
+
     public void setMovieDetails(MovieDetails movieDetails) {
         this.movieDetails = movieDetails;
         this.movieDetails.setMovie(this);
