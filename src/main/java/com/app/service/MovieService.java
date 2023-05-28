@@ -1,9 +1,12 @@
 package com.app.service;
 
 import com.app.dto.MovieDto;
+import com.app.dto.MovieSmallDto;
+import com.app.dto.MovieSmallDtoWrapper;
 import com.app.entity.Movie;
 import com.app.entity.MovieDetails;
 import com.app.exception.EmptyResponseFromApiException;
+import com.app.exception.EmptyResultFromDbCall;
 import com.app.repository.MovieDetailsRepository;
 import com.app.repository.MovieRepository;
 import com.app.util.IdMapper;
@@ -17,7 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,4 +66,34 @@ public class MovieService {
         return MovieMapper.mapMovieToMovieDto(movie);
     }
 
+    public List<MovieSmallDto> getTopMoviesFroIMDb() {
+        ResponseEntity<MovieSmallDtoWrapper> response
+                = restTemplate.getForEntity("https://imdb-api.com/en/API/Top250Movies/"+apiKey, MovieSmallDtoWrapper.class);
+        MovieSmallDtoWrapper movieWrapper = response.getBody();
+        if (movieWrapper != null) {
+            List<MovieSmallDto> movies = movieWrapper.items();
+            Collections.shuffle(movies);
+            return movies.stream().limit(18).collect(Collectors.toList());
+        }
+        throw new EmptyResponseFromApiException("ResponseEntity<MovieSmallDtoWrapper> response is empty.");
+    }
+
+    public List<MovieSmallDto> getMostPopularMovies() {
+        ResponseEntity<MovieSmallDtoWrapper> response
+                = restTemplate.getForEntity("https://imdb-api.com/en/API/MostPopularMovies/"+apiKey, MovieSmallDtoWrapper.class);
+        MovieSmallDtoWrapper movieWrapper = response.getBody();
+        if (movieWrapper != null) {
+            List<MovieSmallDto> movies = movieWrapper.items();
+            return movies.stream().limit(18).collect(Collectors.toList());
+        }
+        throw new EmptyResponseFromApiException("ResponseEntity<MovieSmallDtoWrapper> response is empty.");
+    }
+
+    public Set<MovieSmallDto> getUsersFavouriteMovies() {
+        Set<Movie> movies = movieRepository.getFavouriteUsersMovies();
+        if (movies != null) {
+            return MovieMapper.mapMovieSetToMovieSmallDto(movies);
+        }
+        throw new EmptyResultFromDbCall("movieRepository.getFavouriteUsersMovies() returns null");
+    }
 }

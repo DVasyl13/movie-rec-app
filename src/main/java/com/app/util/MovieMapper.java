@@ -97,8 +97,8 @@ public class MovieMapper {
         }).collect(Collectors.toSet());
     }
 
-    private static Set<SimilarMovie> mapMovieSimilarDtoToSimilarMovie(Set<MovieSimilarDto> movieSimilarDtos) {
-        return movieSimilarDtos.stream().map((e) -> {
+    private static Set<SimilarMovie> mapMovieSimilarDtoToSimilarMovie(Set<MovieSmallDto> movieSmallDtos) {
+        return movieSmallDtos.stream().map((e) -> {
             SimilarMovie movie = new SimilarMovie();
             movie.setId(IdMapper.getLongFromString(e.id()));
             movie.setImage(e.image());
@@ -108,9 +108,9 @@ public class MovieMapper {
         }).collect(Collectors.toSet());
     }
 
-    private static Set<MovieSimilarDto> mapSimilarMoviesToMovieSimilarDtos(Set<SimilarMovie> movies) {
+    private static Set<MovieSmallDto> mapSimilarMoviesToMovieSimilarDtos(Set<SimilarMovie> movies) {
         return movies.stream().map((e) -> {
-            return new MovieSimilarDto(IdMapper.getIMDbMovieId(e.getId()), e.getTitle(),
+            return new MovieSmallDto(IdMapper.getIMDbMovieId(e.getId()), e.getTitle(),
                     e.getImage(), e.getImDbRating());
         }).collect(Collectors.toSet());
     }
@@ -132,7 +132,7 @@ public class MovieMapper {
 
 
     public static MovieDto mapMovieToMovieDto(MovieDetails movieDetails) {
-        Set<MovieSimilarDto> similars = mapSimilarMoviesToMovieSimilarDtos(movieDetails.getMovies());
+        Set<MovieSmallDto> similars = mapSimilarMoviesToMovieSimilarDtos(movieDetails.getMovies());
         Set<GenreDto> genres = mapGenreToGenreDto(movieDetails.getGenres());
         Set<PersonDto> writers = mapWriterSetToPersonSet(movieDetails.getWriters());
         Set<ActorDto> actors = mapActorSetToActorDtoSet(movieDetails.getActors());
@@ -159,5 +159,11 @@ public class MovieMapper {
                 similars
                 , directors, writers, actors
         );
+    }
+
+    public static Set<MovieSmallDto> mapMovieSetToMovieSmallDto(Set<Movie> movies) {
+        return movies.stream()
+                .map((e) -> new MovieSmallDto(IdMapper.getIMDbMovieId(e.getId()), e.getTitle(), e.getImage(), null))
+                .collect(Collectors.toSet());
     }
 }

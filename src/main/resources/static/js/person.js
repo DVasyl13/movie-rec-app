@@ -1,4 +1,5 @@
 import initializeHeader from "./header-initializer.js";
+import {fillPersonMoviesMediaScroller} from "./media-scroller.js";
 
 const apiKey = 'k_34mdujn4';
 
@@ -71,33 +72,35 @@ function setPersonDetails(data) {
     pDescription.innerHTML = data.summary;
     personDescription.appendChild(pDescription);
 
-    const castCardContainer = document.querySelector('.cast-card-container');
-    data.knownFor.forEach((movie) => {
-        const a = document.createElement('a');
-        a.href = '/movie/'+ movie.id;
-
-        const movieDiv = document.createElement('div');
-        movieDiv.setAttribute('class', 'person-card');
-
-        const card = document.createElement('div');
-        card.setAttribute('class', 'card');
-
-        const img = document.createElement('img');
-        img.src = movie.image;
-        img.alt = movie.fullTitle + '.png';
-        card.appendChild(img)
-
-        const movieDescription = document.createElement('div');
-        movieDescription.setAttribute('class', 'person-description');
-        const  p = document.createElement('p');
-        p.innerHTML = 'In ' + movie.title;
-        const  p2 = document.createElement('p');
-        p2.innerHTML = 'as ' + '\"' + movie.role + '\"';
-        movieDescription.appendChild(p);
-        movieDescription.appendChild(p2);
-        movieDiv.appendChild(card);
-        movieDiv.appendChild(movieDescription);
-        a.appendChild(movieDiv);
-        castCardContainer.appendChild(a);
-    });
+    fillPersonMoviesMediaScroller(data.knownFor);
+    //
+    // const castCardContainer = document.querySelector('.cast-card-container');
+    // data.knownFor.forEach((movie) => {
+    //     const a = document.createElement('a');
+    //     a.href = '/movie/'+ movie.id;
+    //
+    //     const movieDiv = document.createElement('div');
+    //     movieDiv.setAttribute('class', 'person-card');
+    //
+    //     const card = document.createElement('div');
+    //     card.setAttribute('class', 'card');
+    //
+    //     const img = document.createElement('img');
+    //     img.src = movie.image;
+    //     img.alt = movie.fullTitle + '.png';
+    //     card.appendChild(img)
+    //
+    //     const movieDescription = document.createElement('div');
+    //     movieDescription.setAttribute('class', 'person-description');
+    //     const  p = document.createElement('p');
+    //     p.innerHTML = 'In ' + movie.title;
+    //     const  p2 = document.createElement('p');
+    //     p2.innerHTML = 'as ' + '\"' + movie.role + '\"';
+    //     movieDescription.appendChild(p);
+    //     movieDescription.appendChild(p2);
+    //     movieDiv.appendChild(card);
+    //     movieDiv.appendChild(movieDescription);
+    //     a.appendChild(movieDiv);
+    //     castCardContainer.appendChild(a);
+    // });
 }

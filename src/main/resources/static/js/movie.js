@@ -1,4 +1,5 @@
 import initializeHeader from "./header-initializer.js";
+import {fillCastMediaScroller, fillMovieMediaScroller} from "./media-scroller.js";
 
 const ignoreBtn = document.getElementById("ignore-btn");
 const likeButton = document.getElementById("like-btn");
@@ -292,45 +293,6 @@ function setMovieDetails(data) {
     document.getElementById('movie-poster').src = data.image;
     document.getElementById('trailer-btn').href = data.trailer.link;
 
-
-    const movieCardContainer = document.querySelector('.movie-card-container');
-    data.similars.forEach((movie) => {
-        const a = document.createElement('a');
-        a.href = '/movie/' + movie.id;
-        const cardDiv = document.createElement('div');
-        cardDiv.setAttribute('class', 'card');
-        const img = document.createElement('img');
-        img.src = movie.image;
-        img.alt = movie.title + '.png';
-        cardDiv.appendChild(img)
-        a.appendChild(cardDiv);
-        movieCardContainer.appendChild(a);
-    });
-
-    const castCardContainer = document.querySelector('.cast-card-container');
-    data.actorList.forEach((actor) => {
-        const a = document.createElement('a');
-        a.href = '/person/' + actor.id;
-
-        const cardDiv = document.createElement('div');
-        cardDiv.setAttribute('class', 'person-card');
-
-        const actorDiv = document.createElement('div');
-        actorDiv.setAttribute('class', 'card');
-
-        const img = document.createElement('img');
-        img.src = actor.image;
-        img.alt = actor.name + '.png';
-        actorDiv.appendChild(img)
-
-        const personDescription = document.createElement('div');
-        personDescription.setAttribute('class', 'person-description');
-        const p = document.createElement('p');
-        p.innerHTML = actor.name;
-        personDescription.appendChild(p);
-        cardDiv.appendChild(actorDiv);
-        cardDiv.appendChild(personDescription);
-        a.appendChild(cardDiv);
-        castCardContainer.appendChild(a);
-    });
+    fillMovieMediaScroller(data.similars, 'movie');
+    fillCastMediaScroller(data.actorList, 'cast');
 }

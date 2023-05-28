@@ -1,0 +1,17 @@
+.movies-container {
+    margin-top: 70px;
+    width: 100%;
+}
+
+#top-container {
+    margin-top: 85px;
+}
+
+p {
+    color: #F4EEE0;
+    font-weight: bold;
+}
+
+.movies-container-wrapper {
+    margin-top: 20px;
+}

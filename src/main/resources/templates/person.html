@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/footer.css">
     <link rel="stylesheet" type="text/css" href="/css/popups.css">
     <link rel="stylesheet" type="text/css" href="/css/person.css">
+    <link rel="stylesheet" type="text/css" href="/css/media-scroller.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -40,17 +41,6 @@
                 </div>
             </div>
             <div class="movie-description">
-<!--                <p><span>Role:</span> Actor, Producer, Director</p>-->
-<!--                <p><span>Birthday:</span> 1956-01-03</p>-->
-<!--                <p><span>Awards:</span> Won 2 Oscars | 44 wins & 43 nominations total</p>-->
-<!--                <p><span>Height:</span> 5′ 9¾″ (1.77 m)</p>-->
-<!--                <p><span>Death-day:</span> (optional)</p>-->
-
-<!--                <p class="movie-plot">Mel Gibson. Actor: Braveheart. Mel Columcille Gerard Gibson was born January 3,-->
-<!--                    1956 in Peekskill, New York, USA, as the sixth of eleven children of Hutton Gibson, a railroad-->
-<!--                    brakeman, and Anne Patricia (Reilly) Gibson (who died in December of 1990). His mother was Irish,-->
-<!--                    from County Longford, while his American-born father is of mostly Irish descent.\n\nMel and his-->
-<!--                    family moved to Australia in the late 1960s, settling in New...</p>-->
             </div>
             <div>
 
@@ -61,58 +51,27 @@
     <div class="bottom-container">
         <div class="cast-container">
             <div class="title">
-                <p>Know for:</p>
+                <p>Know for</p>
             </div>
-            <div class="cast-card-container">
-<!--                <a href="/person.html">-->
-<!--                    <div class="person-card">-->
-<!--                        <div class="card">-->
-<!--                            <img src="https://imdb-api.com/images/original/nopicture.jpg">-->
-<!--                        </div>-->
-<!--                        <div class="person-description">-->
-<!--                            <p>Jerome Patrick Hoban</p>-->
-<!--                            <p>as "Ed Sullivan"</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </a>-->
-<!--                <a href="/person.html">-->
-<!--                    <div class="person-card">-->
-<!--                        <div class="card">-->
-<!--                            <img src="https://imdb-api.com/images/original/nopicture.jpg">-->
-<!--                        </div>-->
-<!--                        <div class="person-description">-->
-<!--                            <p>Jerome Patrick Hoban</p>-->
-<!--                            <p>as "Ed Sullivan"</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </a>-->
-<!--                <a href="/person.html">-->
-<!--                    <div class="person-card">-->
-<!--                        <div class="card">-->
-<!--                            <img src="https://imdb-api.com/images/original/nopicture.jpg">-->
-<!--                        </div>-->
-<!--                        <div class="person-description">-->
-<!--                            <p>Jerome Patrick Hoban</p>-->
-<!--                            <p>as "Ed Sullivan"</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </a>-->
-<!--                <a href="/person.html">-->
-<!--                    <div class="person-card">-->
-<!--                        <div class="card">-->
-<!--                            <img src="https://imdb-api.com/images/original/nopicture.jpg">-->
-<!--                        </div>-->
-<!--                        <div class="person-description">-->
-<!--                            <p>Jerome Patrick Hoban</p>-->
-<!--                            <p>as "Ed Sullivan"</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </a>-->
+            <div class="media-container">
+                <div class="media-scroller" id="movie-scroller">
+
+                </div>
             </div>
         </div>
     </div>
 </div>
+<svg>
+    <symbol id="next" viewBox="0 0 256 512">
+        <path fill="white"
+              d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"/>
+    </symbol>
 
+    <symbol id="previous" viewBox="0 0 256 512">
+        <path fill="white"
+              d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/>
+    </symbol>
+</svg>
 <footer th:insert="~{block/footer :: footer}"></footer>
 <script type="module" src="/js/person.js"></script>
 <script src="/js/header.js"></script>

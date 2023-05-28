@@ -1,0 +1,139 @@
+.container {
+    margin-top: 70px;
+}
+
+p {
+    color: #F4EEE0;
+}
+
+.navigation {
+    height: 30vh;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0 9rem 0 9rem;
+
+}
+
+.large-text {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.large-text:hover {
+    text-decoration: underline;
+}
+
+.medium-text {
+    font-size: 18px;
+}
+
+.small-text {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.top-padding {
+    margin-top: 20px;
+}
+
+.navigation-main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3rem;
+}
+
+.nav-btn {
+    border-radius: 10px;
+    border: 0;
+    background: transparent;
+    color: #F4EEE0;
+    min-width: 120px;
+    height: 2rem;
+    font-size: 18px;
+    transition: 0.2s ease;
+}
+
+.nav-btn:hover {
+    scale: 110%;
+    color: white;
+    font-weight: bold;
+}
+
+.nav-btn:focus {
+    font-weight: bold;
+    background: #6D5D6E;
+}
+
+.element-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 9rem 0 9rem;
+}
+
+.main-element {
+    height: 360px;
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+.main-element-left-section {
+    width: 22%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.main-element-left-section > img {
+    width: 100%;
+    min-width: 160px;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.main-element-left-section > a {
+    background: #6D5D6E;
+    color: #F4EEE0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    border-radius: 0 0 8px 8px;
+
+}
+
+.main-element-right-section {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 15px 10px;
+}
+
+.header-text-element {
+    margin-bottom: 10px;
+}
+
+.element-description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 10px;
+
+}
+
+.rating-section {
+    margin-top: 10px;
+    display: flex;
+    gap: 2rem;
+    border-radius: 8px;
+    background: #6D5D6E;
+    padding: 5px 5px 5px 5px;
+}

@@ -151,8 +151,8 @@ p {
 
 #movie-poster {
     margin-top: 5vh;
-    width: 285px;
-    height: 366px;
+    aspect-ratio: 2/3;
+    max-height: 400px;
     box-shadow: 1px 2px 3px 3px #2E2137;
 }
 
@@ -166,65 +166,13 @@ p {
 }
 
 .similar-container, .cast-container {
-    width: 87%;
+    width: 100%;
     margin: auto;
-    margin-bottom: 3rem;
-}
-
-.title {
-    margin: auto;
-}
-
-.title p {
-    font-size: 22px;
-    margin-bottom: 1rem;
-}
-
-.movie-card-container, .cast-card-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.card img {
-    box-shadow: 2px 2px 5px 5px #2E2137;
-    width: 229px;
-    height: 283px;
-    border-radius: 8px;
-}
-
-
-.card {
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-20px) scale(1.1);
-}
-
-.person-description {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.person-description p {
-    font-weight: normal;
 }
 
 @media screen and (max-width: 1200px ) and (min-width: 1000px){
     .empty-div {
         width: 20%;
-    }
-
-    .movie-card-container, .cast-card-container {
-        justify-content: center;
-    }
-    .title {
-        margin-left: 7.3rem;
     }
 
 }
@@ -233,13 +181,7 @@ p {
     .empty-div {
         width: 10%;
     }
-    .movie-card-container, .cast-card-container {
-        justify-content: center;
-    }
 
-    .title {
-        margin-left: 3rem;
-    }
 }
 
 @media screen and (max-width: 925px ){
@@ -286,14 +228,6 @@ p {
 
     .addition-content-element p {
         font-size: 18px;
-    }
-
-    .movie-card-container, .cast-card-container {
-        justify-content: center;
-    }
-
-    .title {
-        margin-left: 3rem;
     }
 }
 

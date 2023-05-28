@@ -7,6 +7,6 @@ public record MovieDto(String id, String fullTitle, String image,
                        Integer year, Timestamp releaseDate, Integer runtimeMins,
                        String plot, String awards, String countries, Set<GenreDto> genreList,
                        String companies, String imDbRating, Integer imDbRatingVotes, TrailerDto trailer,
-                       String metacriticRating, BoxOffice boxOffice, Set<MovieSimilarDto> similars,
+                       String metacriticRating, BoxOffice boxOffice, Set<MovieSmallDto> similars,
                        Set<PersonDto> directorList, Set<PersonDto> writerList, Set<ActorDto> actorList) {
 }
