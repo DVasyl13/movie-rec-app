@@ -69,6 +69,7 @@ function initPage() {
 function initNotAuthorizedPage() {
     const container = document.getElementById('container');
     container.setAttribute('class', 'not-authorized-container');
+    $(container).empty();
     const p = document.createElement('p');
     p.setAttribute('class', 'medium-text');
     p.innerHTML = 'It seems you are not authorized';
@@ -199,3 +200,5 @@ function setUsersMovies(data) {
         elementContainer.appendChild(mainElement);
     });
 }
+
+export {initNotAuthorizedPage}

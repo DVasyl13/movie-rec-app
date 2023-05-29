@@ -37,6 +37,7 @@
 }
 .title > p {
     font-size: 26px;
+    font-weight: bold;
 }
 
 .media-element > img {

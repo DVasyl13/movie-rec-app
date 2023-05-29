@@ -63,7 +63,7 @@ public class MovieMapper {
 
     private static Set<PersonDto> mapDirectorSetToPersonDtoSet(Set<Director> directors) {
         return directors.stream().map((e) -> {
-            return new PersonDto(IdMapper.getIMDbPersonId(e.getId()), e.getName());
+            return new PersonDto(IdMapper.getIMDbPersonId(e.getId()),e.getId(), e.getName());
         }).collect(Collectors.toSet());
     }
 
@@ -78,7 +78,7 @@ public class MovieMapper {
 
     private static Set<PersonDto> mapWriterSetToPersonSet(Set<Writer> writers) {
         return writers.stream().map((e) -> {
-            return new PersonDto(IdMapper.getIMDbPersonId(e.getId()), e.getName());
+            return new PersonDto(IdMapper.getIMDbPersonId(e.getId()),e.getId(), e.getName());
         }).collect(Collectors.toSet());
     }
     private static Set<Actor> mapActorDtoSetToActorSet(Set<ActorDto> actorDtos) {
@@ -93,7 +93,7 @@ public class MovieMapper {
 
     private static Set<ActorDto> mapActorSetToActorDtoSet(Set<Actor> actors) {
         return actors.stream().map((e) -> {
-            return new ActorDto(IdMapper.getIMDbPersonId(e.getId()),e.getName(),e.getImage());
+            return new ActorDto(IdMapper.getIMDbPersonId(e.getId()),e.getId(),e.getName(),e.getImage());
         }).collect(Collectors.toSet());
     }
 
@@ -103,15 +103,14 @@ public class MovieMapper {
             movie.setId(IdMapper.getLongFromString(e.id()));
             movie.setImage(e.image());
             movie.setTitle(e.title());
-            movie.setImDbRating(e.imDbRating());
             return movie;
         }).collect(Collectors.toSet());
     }
 
     private static Set<MovieSmallDto> mapSimilarMoviesToMovieSimilarDtos(Set<SimilarMovie> movies) {
         return movies.stream().map((e) -> {
-            return new MovieSmallDto(IdMapper.getIMDbMovieId(e.getId()), e.getTitle(),
-                    e.getImage(), e.getImDbRating());
+            return new MovieSmallDto(IdMapper.getIMDbMovieId(e.getId()), e.getId(),e.getTitle(),
+                    e.getImage());
         }).collect(Collectors.toSet());
     }
 
@@ -139,6 +138,7 @@ public class MovieMapper {
         Set<PersonDto> directors = mapDirectorSetToPersonDtoSet(movieDetails.getDirectors());
         return new MovieDto(
                 IdMapper.getIMDbMovieId(movieDetails.getId()),
+                movieDetails.getId(),
                 movieDetails.getMovie().getTitle(),
                 movieDetails.getMovie().getImage(),
                 movieDetails.getYear(),
@@ -163,7 +163,7 @@ public class MovieMapper {
 
     public static Set<MovieSmallDto> mapMovieSetToMovieSmallDto(Set<Movie> movies) {
         return movies.stream()
-                .map((e) -> new MovieSmallDto(IdMapper.getIMDbMovieId(e.getId()), e.getTitle(), e.getImage(), null))
+                .map((e) -> new MovieSmallDto(IdMapper.getIMDbMovieId(e.getId()), e.getId(), e.getTitle(), e.getImage()))
                 .collect(Collectors.toSet());
     }
 }

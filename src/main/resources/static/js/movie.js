@@ -293,6 +293,6 @@ function setMovieDetails(data) {
     document.getElementById('movie-poster').src = data.image;
     document.getElementById('trailer-btn').href = data.trailer.link;
 
-    fillMovieMediaScroller(data.similars, 'movie');
+    fillMovieMediaScroller(data.similars, 'movie-scroller','movie');
     fillCastMediaScroller(data.actorList, 'cast');
 }

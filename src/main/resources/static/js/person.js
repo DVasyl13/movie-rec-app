@@ -1,5 +1,5 @@
 import initializeHeader from "./header-initializer.js";
-import {fillPersonMoviesMediaScroller} from "./media-scroller.js";
+import {fillExtendedMoviesMediaScroller} from "./media-scroller.js";
 
 const apiKey = 'k_34mdujn4';
 
@@ -72,5 +72,5 @@ function setPersonDetails(data) {
     pDescription.innerHTML = data.summary;
     personDescription.appendChild(pDescription);
 
-    fillPersonMoviesMediaScroller(data.knownFor,'movie-scroller', 'movie');
+    fillExtendedMoviesMediaScroller(data.knownFor,'movie-scroller', 'movie');
 }

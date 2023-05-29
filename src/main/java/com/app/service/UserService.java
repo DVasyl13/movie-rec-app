@@ -1,18 +1,21 @@
 package com.app.service;
 
 import com.app.dto.MovieDto;
+import com.app.dto.PersonDto;
 import com.app.dto.UserFullSubmission;
 import com.app.dto.UserPutDto;
 import com.app.entity.Movie;
 import com.app.entity.MovieDetails;
 import com.app.entity.User;
 import com.app.exception.*;
+import com.app.repository.DirectorRepository;
 import com.app.repository.MovieDetailsRepository;
 import com.app.repository.MovieRepository;
 import com.app.repository.UserRepository;
 import com.app.util.IdMapper;
 import com.app.util.MovieMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

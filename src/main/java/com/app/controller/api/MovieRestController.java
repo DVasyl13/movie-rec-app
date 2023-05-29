@@ -2,7 +2,6 @@ package com.app.controller.api;
 
 import com.app.dto.MovieDto;
 import com.app.dto.MovieSmallDto;
-import com.app.entity.Movie;
 import com.app.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

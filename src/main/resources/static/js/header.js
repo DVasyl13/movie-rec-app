@@ -2,7 +2,7 @@ const searchBar = document.querySelector('.search-bar input');
 let dropDownMenu;
 const apiKey = 'k_h5a19iwm';
 let typingTimer;
-const typingDelay = 1000; // milliseconds delay after user stops typing
+const typingDelay = 800; // milliseconds delay after user stops typing
 
 
 searchBar.addEventListener('input', function (event) {

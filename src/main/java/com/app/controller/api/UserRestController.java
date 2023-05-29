@@ -1,7 +1,10 @@
 package com.app.controller.api;
 
 import com.app.dto.MovieDto;
+import com.app.dto.MovieSmallDto;
+import com.app.dto.PersonDto;
 import com.app.dto.UserPutDto;
+import com.app.service.MovieService;
 import com.app.service.UserService;
 import com.app.util.ResponseHandler;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import java.util.Set;
 public class UserRestController {
 
     private final UserService userService;
+    private final MovieService movieService;
 
     @PutMapping
     @RequestMapping("/liked")
@@ -55,5 +59,11 @@ public class UserRestController {
     @RequestMapping("/{id}/watched")
     public Set<MovieDto> getUsersWatchedMovies(@PathVariable("id") Long id) {
         return userService.getUsersWatchedMovies(id);
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/director-based-movies")
+    public Set<MovieSmallDto> getDirectorBasedMovies(@PathVariable("id") Long id) {
+     return movieService.getMoviesBasedOnDirectors(id);
     }
 }

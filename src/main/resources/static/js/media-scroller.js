@@ -1,7 +1,7 @@
 const groupSize = 6;
 
-function fillMovieMediaScroller(data, groupName) {
-    const mediaScroller = document.getElementById('movie-scroller');
+function fillMovieMediaScroller(data,selector, groupName) {
+    const mediaScroller = document.getElementById(selector);
     let index = 0;
     let groupIndex = 1;
     for (let i = 0; i < Math.ceil(data.length / groupSize); i++) {
@@ -81,7 +81,7 @@ function fillCastMediaScroller(data, groupName) {
     mediaScroller.appendChild(navigation);
 }
 
-function fillPersonMoviesMediaScroller(data, selector, groupName) {
+function fillExtendedMoviesMediaScroller(data, selector, groupName) {
     const mediaScroller = document.getElementById(selector);
     let index = 0;
     let groupIndex = 1;
@@ -143,4 +143,4 @@ function createScrollTag(groupIndex, group, groupName, direction) {
     group.appendChild(a);
 }
 
-export {fillCastMediaScroller, fillMovieMediaScroller, fillPersonMoviesMediaScroller}
+export {fillCastMediaScroller, fillMovieMediaScroller, fillExtendedMoviesMediaScroller}

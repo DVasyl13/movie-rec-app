@@ -1,12 +1,11 @@
 package com.app.service;
 
-import com.app.dto.MovieDto;
-import com.app.dto.MovieSmallDto;
-import com.app.dto.MovieSmallDtoWrapper;
+import com.app.dto.*;
 import com.app.entity.Movie;
 import com.app.entity.MovieDetails;
 import com.app.exception.EmptyResponseFromApiException;
 import com.app.exception.EmptyResultFromDbCall;
+import com.app.repository.DirectorRepository;
 import com.app.repository.MovieDetailsRepository;
 import com.app.repository.MovieRepository;
 import com.app.util.IdMapper;
@@ -20,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +32,7 @@ public class MovieService {
     @PersistenceContext
     private final EntityManager entityManager;
     private final MovieRepository movieRepository;
+    private final DirectorRepository directorRepository;
     private final MovieDetailsRepository movieDetailsRepository;
     private final RestTemplate restTemplate;
 
@@ -95,5 +92,25 @@ public class MovieService {
             return MovieMapper.mapMovieSetToMovieSmallDto(movies);
         }
         throw new EmptyResultFromDbCall("movieRepository.getFavouriteUsersMovies() returns null");
+    }
+
+    //TODO: add ignoring watched/ignored movies
+    public Set<MovieSmallDto> getMoviesBasedOnDirectors(Long id) {
+        var directors =  directorRepository.getDirectorByUsersLikedMovies(id);
+        var topThree = directors.stream()
+                .limit(3)
+                .collect(Collectors.toSet());
+
+        Set<MovieSmallDto> set = new HashSet<>();
+
+        topThree.forEach(e -> {
+            ResponseEntity<DirectorDtoWrapper> response
+                    = restTemplate.getForEntity("https://imdb-api.com/en/API/Name/"+apiKey+"/"+IdMapper.getIMDbPersonId(e.idDigit()), DirectorDtoWrapper.class);
+            DirectorDtoWrapper movieJson = response.getBody();
+            if (movieJson != null) {
+                set.addAll(movieJson.knownFor());
+            }
+        });
+        return set.stream().limit(12).collect(Collectors.toSet());
     }
 }

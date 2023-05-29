@@ -7,6 +7,8 @@
   <link rel="stylesheet" type="text/css" href="/css/header.css">
   <link rel="stylesheet" type="text/css" href="/css/footer.css">
   <link rel="stylesheet" type="text/css" href="/css/popups.css">
+  <link rel="stylesheet" type="text/css" href="/css/saved.css">
+  <link rel="stylesheet" type="text/css" href="/css/for-you.css">
   <link rel="stylesheet" type="text/css" href="/css/media-scroller.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,8 +23,22 @@
 <header th:insert="~{block/header :: header}"></header>
 <div th:insert="~{block/reg-log-popups :: reg-log-popups}"></div>
 
+<div id="container">
+
+<!--  //TODO: if not authorized remove-->
+  <div class="movies-container-wrapper" id="top-container">
+    <div class="title">
+      <p>Based on your most liked directors</p>
+    </div>
+    <div class="media-container">
+      <div class="media-scroller" id="director-based-scroller">
+
+      </div>
+    </div>
+  </div>
 
 
+</div>
 
 <svg>
   <symbol id="next" viewBox="0 0 256 512">
@@ -35,8 +51,9 @@
           d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"/>
   </symbol>
 </svg>
-<script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
-
 <footer th:insert="~{block/footer :: footer}"></footer>
+<script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
+<script type="module" src="/js/for-you.js"></script>
+<script src="/js/header.js"></script>
 </body>
 </html>
