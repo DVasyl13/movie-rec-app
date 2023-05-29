@@ -1,132 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" type="text/css" href="/css/styling.css">
-  <link rel="stylesheet" type="text/css" href="/css/header.css">
-  <link rel="stylesheet" type="text/css" href="/css/footer.css">
-  <link rel="stylesheet" type="text/css" href="/css/popups.css">
-  <link rel="stylesheet" type="text/css" href="/css/saved.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-  <title>What to Watch</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="/css/styling.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="/css/popups.css">
+    <link rel="stylesheet" type="text/css" href="/css/saved.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <title>What to Watch</title>
 
 </head>
 <body>
 <header th:insert="~{block/header :: header}"></header>
 <div th:insert="~{block/reg-log-popups :: reg-log-popups}"></div>
 
-<div class="container">
-  <div class="navigation">
-    <a href="/account">
-      <p class="nav-element large-text">Bobby saving</p>
-    </a>
-    <div class="navigation-main">
-      <button class="nav-btn" id="watched">Watched</button>
-      <button class="nav-btn" id="liked">Liked</button>
-      <button class="nav-btn" id="ignored">Ignored</button>
-    </div>
-    <p class="nav-element small-text top-padding" id="section-name">Your {section-name}:</p>
-  </div>
-
-  <div class="element-container">
-    <div class="main-element">
-      <div class="main-element-left-section">
-        <img src="https://image.tmdb.org/t/p/w342/GQP6noTBKsYiAYyn8PYXFcsSgH.jpg">
-        <a href="/">
-          <p>Trailer</p>
-        </a>
-      </div>
-      <div class="main-element-right-section">
-        <div class="header-text-element">
-          <a href="/">
-            <p class="large-text">Title (Year)</p>
-          </a>
-        </div>
-        <div class="element-description">
-          <p class="medium-text">Release date</p>
-          <p class="medium-text">runtime</p>
-          <p class="medium-text">genres, genres, genres, genres,</p>
-          <p class="medium-text">directors</p>
-          <p class="medium-text">companies</p>
-          <p class="medium-text">countries</p>
-          <p class="medium-text">awards</p>
-        </div>
-        <div class="rating-section">
-          <p class="medium-text">IMDB: rating</p>
-          <p class="medium-text">Metacritic: rating</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="main-element">
-      <div class="main-element-left-section">
-        <img src="https://image.tmdb.org/t/p/w342/GQP6noTBKsYiAYyn8PYXFcsSgH.jpg">
-        <a href="/">
-          <p>Trailer</p>
-        </a>
-      </div>
-      <div class="main-element-right-section">
-        <div class="header-text-element">
-          <a href="/">
-            <p class="large-text">Title (Year)</p>
-          </a>
-        </div>
-        <div class="element-description">
-          <p class="medium-text">Release date</p>
-          <p class="medium-text">runtime</p>
-          <p class="medium-text">genres, genres, genres, genres,</p>
-          <p class="medium-text">directors</p>
-          <p class="medium-text">companies</p>
-          <p class="medium-text">countries</p>
-          <p class="medium-text">awards</p>
-        </div>
-        <div class="rating-section">
-          <p class="medium-text">IMDB: rating</p>
-          <p class="medium-text">Metacritic: rating</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="main-element">
-      <div class="main-element-left-section">
-        <img src="https://image.tmdb.org/t/p/w342/GQP6noTBKsYiAYyn8PYXFcsSgH.jpg">
-        <a href="/">
-          <p>Trailer</p>
-        </a>
-      </div>
-      <div class="main-element-right-section">
-        <div class="header-text-element">
-          <a href="/">
-            <p class="large-text">Title (Year)</p>
-          </a>
-        </div>
-        <div class="element-description">
-          <p class="medium-text">Release date</p>
-          <p class="medium-text">runtime</p>
-          <p class="medium-text">genres, genres, genres, genres,</p>
-          <p class="medium-text">directors</p>
-          <p class="medium-text">companies</p>
-          <p class="medium-text">countries</p>
-          <p class="medium-text">awards</p>
-        </div>
-        <div class="rating-section">
-          <p class="medium-text">IMDB: rating</p>
-          <p class="medium-text">Metacritic: rating</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<div id="container">
 
 </div>
 
 
 <footer th:insert="~{block/footer :: footer}"></footer>
+<script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
 <script type="module" src="/js/saved.js"></script>
 <script src="/js/header.js"></script>
 </body>

@@ -25,7 +25,7 @@ public class SimilarMovie {
     @Column(name = "image", nullable = false)
     private String image;
 
-    @Column(name = "imDbRating", length = 4)
+    @Column(name = "im_db_rating", length = 4)
     private Float imDbRating;
 
     @ManyToMany(mappedBy = "movies")

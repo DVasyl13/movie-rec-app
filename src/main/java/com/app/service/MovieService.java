@@ -63,7 +63,7 @@ public class MovieService {
     }
 
     private MovieDto changeIdToIMDbStyle(MovieDetails movie) {
-        return MovieMapper.mapMovieToMovieDto(movie);
+        return MovieMapper.mapMovieDetailsToMovieDto(movie);
     }
 
     public List<MovieSmallDto> getTopMoviesFroIMDb() {

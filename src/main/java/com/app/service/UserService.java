@@ -1,22 +1,25 @@
 package com.app.service;
 
+import com.app.dto.MovieDto;
 import com.app.dto.UserFullSubmission;
 import com.app.dto.UserPutDto;
 import com.app.entity.Movie;
+import com.app.entity.MovieDetails;
 import com.app.entity.User;
-import com.app.exception.MovieNotFoundException;
-import com.app.exception.UserAlreadyExistException;
-import com.app.exception.UserNotFoundException;
-import com.app.exception.WrongPasswordException;
+import com.app.exception.*;
+import com.app.repository.MovieDetailsRepository;
 import com.app.repository.MovieRepository;
 import com.app.repository.UserRepository;
 import com.app.util.IdMapper;
+import com.app.util.MovieMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,6 +28,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
+    private final MovieDetailsRepository movieDetailsRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
 
@@ -148,5 +152,33 @@ public class UserService {
             throw new MovieNotFoundException(movieId);
         }
         return movie.get();
+    }
+
+    public Set<MovieDto> getUsersLikedMovies(Long id) {
+        Set<MovieDetails> movieDetails = movieDetailsRepository.findLikedMovieByUserId(id);
+        if (movieDetails != null) {
+            return movieDetails.stream()
+                    .map(MovieMapper::mapMovieDetailsToMovieDto)
+                    .collect(Collectors.toSet());
+        }
+        throw new EmptyResultFromDbCall("getUsersLikedMovies returns null");
+    }
+    public Set<MovieDto> getUsersIgnoredMovies(Long id) {
+        Set<MovieDetails> movieDetails = movieDetailsRepository.findIgnoredMovieByUserId(id);
+        if (movieDetails != null) {
+            return movieDetails.stream()
+                    .map(MovieMapper::mapMovieDetailsToMovieDto)
+                    .collect(Collectors.toSet());
+        }
+        throw new EmptyResultFromDbCall("getUsersIgnoredMovies returns null");
+    }
+    public Set<MovieDto> getUsersWatchedMovies(Long id) {
+        Set<MovieDetails> movieDetails = movieDetailsRepository.findWatchedMovieByUserId(id);
+        if (movieDetails != null) {
+            return movieDetails.stream()
+                    .map(MovieMapper::mapMovieDetailsToMovieDto)
+                    .collect(Collectors.toSet());
+        }
+        throw new EmptyResultFromDbCall("getUsersWatchedMovies returns null");
     }
 }

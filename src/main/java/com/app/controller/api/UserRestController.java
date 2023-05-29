@@ -1,5 +1,6 @@
 package com.app.controller.api;
 
+import com.app.dto.MovieDto;
 import com.app.dto.UserPutDto;
 import com.app.service.UserService;
 import com.app.util.ResponseHandler;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -34,5 +37,23 @@ public class UserRestController {
     public ResponseEntity<Object> doToggleToWatched(@RequestBody UserPutDto user) {
         var userResponse = userService.toggleUserWatchedMovie(user);
         return ResponseHandler.generateResponse("Movie added successfully", HttpStatus.OK, userResponse);
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/liked")
+    public Set<MovieDto> getUsersLikedMovies(@PathVariable("id") Long id) {
+        return userService.getUsersLikedMovies(id);
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/ignored")
+    public Set<MovieDto> getUsersIgnoredMovies(@PathVariable("id") Long id) {
+        return userService.getUsersIgnoredMovies(id);
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/watched")
+    public Set<MovieDto> getUsersWatchedMovies(@PathVariable("id") Long id) {
+        return userService.getUsersWatchedMovies(id);
     }
 }

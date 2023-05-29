@@ -249,7 +249,7 @@ const setUserData = (response, password) => {
     sessionStorage.setItem('username', response.data.username);
     sessionStorage.setItem('password', password);
     //sessionStorage.setItem('email', response.data.email);
-    sessionStorage.setItem('user', JSON.stringify(response.data))
+    sessionStorage.setItem('user', JSON.stringify(response.data));
     location.reload();
 }
 

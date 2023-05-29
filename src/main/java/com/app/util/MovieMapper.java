@@ -131,7 +131,7 @@ public class MovieMapper {
     }
 
 
-    public static MovieDto mapMovieToMovieDto(MovieDetails movieDetails) {
+    public static MovieDto mapMovieDetailsToMovieDto(MovieDetails movieDetails) {
         Set<MovieSmallDto> similars = mapSimilarMoviesToMovieSimilarDtos(movieDetails.getMovies());
         Set<GenreDto> genres = mapGenreToGenreDto(movieDetails.getGenres());
         Set<PersonDto> writers = mapWriterSetToPersonSet(movieDetails.getWriters());
