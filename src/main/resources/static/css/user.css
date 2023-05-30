@@ -83,3 +83,7 @@
     background-color: #c2bfbc;
     transition-delay: 50ms;
 }
+
+.medium-text {
+    font-size: 18px;
+}

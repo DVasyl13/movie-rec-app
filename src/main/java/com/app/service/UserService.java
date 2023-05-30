@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -183,5 +184,16 @@ public class UserService {
                     .collect(Collectors.toSet());
         }
         throw new EmptyResultFromDbCall("getUsersWatchedMovies returns null");
+    }
+
+    public UserFullSubmission getUserDetails(UserFullSubmission userDto) {
+        Optional<User> user = userRepository.findById(userDto.id());
+        if (user.isEmpty()) {
+            throw new NoSuchElementException("User was not found");
+        } else if (passwordEncoder.matches(userDto.password(), user.get().getPassword())) {
+            var temp = userRepository.getFullUser(userDto.id());
+            return new UserFullSubmission(temp.id(), temp.username(), userDto.password(), temp.email(), temp.birthday(), temp.country(), "");
+        }
+        throw new WrongPasswordException(userDto.username() + " has sent a wrong password");
     }
 }

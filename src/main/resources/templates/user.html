@@ -28,26 +28,26 @@
   <div class="user-input">
     <div class="user-input-element">
       <h1>Username</h1>
-      <input type="text" id="username" name="username" placeholder="Username">
+      <input type="text" id="user-username" name="username" placeholder="Username">
     </div>
     <div class="user-input-element">
       <h1>Email</h1>
-      <input type="text" id="email" name="email" placeholder="Email">
+      <input type="text" id="user-email" name="email" placeholder="Email">
     </div>
     <div class="user-input-element">
       <h1>Password</h1>
-      <input type="password" id="password" name="password" placeholder="Password">
+      <input type="password" id="user-password" name="password" placeholder="Password">
     </div>
     <div class="user-input-element">
       <h1>Country</h1>
-      <input type="text" id="country" name="country" placeholder="Country">
+      <input type="text" id="user-country" name="country" placeholder="Country">
     </div>
     <div class="user-input-element">
       <h1>Birthday</h1>
-      <input type="date" id="birthday" name="birthday" placeholder="Birthday">
+      <input type="date" id="user-birthday" name="birthday" placeholder="Birthday">
     </div>
     <div class="user-input-button">
-      <button>Submit</button>
+      <button id="user-submit-button">Submit</button>
     </div>
 
   </div>
@@ -57,6 +57,6 @@
 
 <footer th:insert="~{block/footer :: footer}"></footer>
 <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
-
+<script type="module" src="/js/user.js"></script>
 </body>
 </html>

@@ -1,9 +1,6 @@
 package com.app.controller.api;
 
-import com.app.dto.MovieDto;
-import com.app.dto.MovieSmallDto;
-import com.app.dto.PersonDto;
-import com.app.dto.UserPutDto;
+import com.app.dto.*;
 import com.app.service.MovieService;
 import com.app.service.UserService;
 import com.app.util.ResponseHandler;
@@ -12,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -21,6 +19,13 @@ public class UserRestController {
 
     private final UserService userService;
     private final MovieService movieService;
+
+    @PostMapping
+    @RequestMapping
+    public ResponseEntity<Object> getUserDetails(@RequestBody UserFullSubmission user) {
+        var userResponse = userService.getUserDetails(user);
+        return ResponseHandler.generateResponse("User had been successfully found", HttpStatus.OK, userResponse);
+    }
 
     @PutMapping
     @RequestMapping("/liked")
@@ -66,4 +71,17 @@ public class UserRestController {
     public Set<MovieSmallDto> getDirectorBasedMovies(@PathVariable("id") Long id) {
      return movieService.getMoviesBasedOnDirectors(id);
     }
+
+    @GetMapping
+    @RequestMapping("/{id}/genres-based-movies")
+    public Set<MovieSmallDto> getGenresBasedMovies(@PathVariable("id") Long id) {
+        return movieService.getMoviesBasedOnGenres(id);
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}/similar-based-movies")
+    public Set<MovieSmallDto> getGenresBasedSimilar(@PathVariable("id") Long id) {
+        return movieService.getMoviesBasedOnSimilars(id);
+    }
+
 }

@@ -6,6 +6,7 @@ import com.app.entity.MovieDetails;
 import com.app.exception.EmptyResponseFromApiException;
 import com.app.exception.EmptyResultFromDbCall;
 import com.app.repository.DirectorRepository;
+import com.app.repository.GenreRepository;
 import com.app.repository.MovieDetailsRepository;
 import com.app.repository.MovieRepository;
 import com.app.util.IdMapper;
@@ -14,10 +15,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,9 +31,13 @@ public class MovieService {
     @Value("${api.key.1}")
     private String apiKey;
 
+    @Value("${api.key.rapid}")
+    private String apiKeyRapid;
+
     @PersistenceContext
     private final EntityManager entityManager;
     private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
     private final DirectorRepository directorRepository;
     private final MovieDetailsRepository movieDetailsRepository;
     private final RestTemplate restTemplate;
@@ -105,12 +111,72 @@ public class MovieService {
 
         topThree.forEach(e -> {
             ResponseEntity<DirectorDtoWrapper> response
-                    = restTemplate.getForEntity("https://imdb-api.com/en/API/Name/"+apiKey+"/"+IdMapper.getIMDbPersonId(e.idDigit()), DirectorDtoWrapper.class);
+                    = restTemplate.getForEntity("https://imdb-api.com/en/API/Name/"+apiKey+"/"+IdMapper.getIMDbPersonId(e.idDigit()),
+                    DirectorDtoWrapper.class);
             DirectorDtoWrapper movieJson = response.getBody();
             if (movieJson != null) {
                 set.addAll(movieJson.knownFor());
             }
         });
         return set.stream().limit(12).collect(Collectors.toSet());
+    }
+
+    public Set<MovieSmallDto> getMoviesBasedOnGenres(Long id) {
+        var genres = genreRepository.getGenresByUsersLikedMovies(id);
+        var ignoredMovies = getMoviesNotToRecommend(id);
+        String genresStingify = genres.stream()
+                .limit(3)
+                .map(GenreDto::value)
+                .collect(Collectors.joining(","));
+
+        System.out.println(genresStingify);
+
+        String url = "https://ott-details.p.rapidapi.com/advancedsearch";
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("start_year", "{1970}")
+                .queryParam("end_year", "{2022}")
+                .queryParam("genre", "{"+ genresStingify +"}")
+                .queryParam("language", "{english}")
+                .queryParam("type", "{movie}")
+                .queryParam("sort", "{latest}")
+                .queryParam("page", "{1}")
+                .encode()
+                .toUriString();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("X-RapidAPI-Key", apiKeyRapid);
+        headers.set("X-RapidAPI-Host", "ott-details.p.rapidapi.com");
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<RapidOTTResponse> response
+                = restTemplate.exchange(urlTemplate, HttpMethod.GET,entity, RapidOTTResponse.class);
+        RapidOTTResponse ottResponse = response.getBody();
+        System.out.println(ottResponse);
+        if (ottResponse != null) {
+            return ottResponse.results()
+                    .stream()
+                    .map(e -> new MovieSmallDto(e.imdbid(), IdMapper.getLongFromString(e.imdbid()), e.title(), e.imageurl()[0]))
+                    .filter(e -> !ignoredMovies.contains(e.id()))
+                    .limit(18)
+                    .collect(Collectors.toSet());
+        }
+        throw new EmptyResponseFromApiException("RapidOTTResponse ottResponse body is null");
+    }
+
+    public Set<MovieSmallDto> getMoviesBasedOnSimilars(Long id) {
+        var ignoredMovies = getMoviesNotToRecommend(id);
+        var movies = movieRepository.getSimilarMovies(id);
+        return movies.stream()
+                .filter(e -> !ignoredMovies.contains(IdMapper.getIMDbMovieId(e.idDigit())))
+                .limit(18)
+                .collect(Collectors.toSet());
+    }
+
+    private Set<String> getMoviesNotToRecommend(Long id) {
+        return movieRepository.getMoviesNotToRecommend(id)
+                .stream()
+                .map(e -> IdMapper.getIMDbMovieId(e.idDigit()))
+                .collect(Collectors.toSet());
     }
 }

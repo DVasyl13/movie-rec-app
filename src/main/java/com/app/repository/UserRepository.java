@@ -1,5 +1,6 @@
 package com.app.repository;
 
+import com.app.dto.UserFullSubmission;
 import com.app.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "where u.id = ?1")
     Optional<User> findById(Long id);
 
+    @Query("select new com.app.dto.UserFullSubmission(u.id, u.username, u.password, u.email, u.birthDay, u.country, '') " +
+            "from User u where u.id=?1")
+    UserFullSubmission getFullUser(Long id);
 }
