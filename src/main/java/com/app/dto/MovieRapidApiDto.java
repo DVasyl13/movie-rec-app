@@ -1,4 +1,6 @@
 package com.app.dto;
 
-public record MovieRapidApiDto(String[] genre, String[] imageurl, String imdbid, String title) {
+import java.util.List;
+
+public record MovieRapidApiDto(List<String> genre, List<String> imageurl, String imdbid, String title) {
 }

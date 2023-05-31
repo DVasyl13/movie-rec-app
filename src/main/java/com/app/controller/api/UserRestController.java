@@ -28,6 +28,13 @@ public class UserRestController {
     }
 
     @PutMapping
+    @RequestMapping("/account")
+    public ResponseEntity<Object> saveUserChanges(@RequestBody UserFullSubmission user) {
+        var userResponse = userService.putUserChanges(user);
+        return ResponseHandler.generateResponse("User changed had been successfully changed", HttpStatus.OK, userResponse);
+    }
+
+    @PutMapping
     @RequestMapping("/liked")
     public ResponseEntity<Object> doToggleToLiked(@RequestBody UserPutDto user) {
         var userResponse = userService.toggleUserLikedMovie(user);

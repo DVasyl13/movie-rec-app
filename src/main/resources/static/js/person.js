@@ -31,39 +31,54 @@ function setPersonDetails(data) {
 
     const pRole = document.createElement('p');
     const spanRole = document.createElement('span');
-    spanRole.innerHTML = 'Role: ';
+    const spanTextRole  = document.createTextNode('Role: ');
+    const pRoleText = document.createTextNode(data.role);
+    spanRole.appendChild(spanTextRole);
     pRole.appendChild(spanRole);
-    pRole.textContent += data.role;
+    pRole.appendChild(pRoleText);
+
     personDescription.appendChild(pRole);
 
     const pBirthday = document.createElement('p');
     const spanBirthday = document.createElement('span');
-    spanBirthday.innerHTML = 'Birthday: ';
+    const spanTextBirthday  = document.createTextNode('Birthday: ');
     let yourDate = new Date(data.birthDate);
+    const pBirthdayText = document.createTextNode(yourDate.toISOString().split('T')[0]);
+
+    spanBirthday.appendChild(spanTextBirthday);
     pBirthday.appendChild(spanBirthday);
-    pBirthday.textContent += yourDate.toISOString().split('T')[0];
+    pBirthday.appendChild(pBirthdayText);
     personDescription.appendChild(pBirthday);
 
     const pAwards = document.createElement('p');
     const spanAwards = document.createElement('span');
-    spanAwards.innerHTML = 'Awards: ';
+    const spanTextAwards  = document.createTextNode('Awards: ');
+    const pAwardText = document.createTextNode(data.awards);
+
+    spanAwards.appendChild(spanTextAwards);
     pAwards.appendChild(spanAwards);
-    pAwards.textContent += data.awards;
+    pAwards.appendChild(pAwardText);
+
     personDescription.appendChild(pAwards);
 
     const pHeight = document.createElement('p');
     const spanHeight = document.createElement('span');
-    spanHeight.innerHTML = 'Height: ';
+    const spanTextHeight  = document.createTextNode('Height: ');
+    const pHeightText = document.createTextNode(data.height);
+    spanHeight.appendChild(spanTextHeight);
     pHeight.appendChild(spanHeight);
-    pHeight.textContent += data.height;
+    pHeight.appendChild(pHeightText);
+
     personDescription.appendChild(pHeight);
 
     if (data.deathDate != null) {
         const pDeathDay = document.createElement('p');
         const spanDeathDay = document.createElement('span');
-        spanDeathDay.innerHTML = 'Death-day: ';
+        const spanTextDeathDay = document.createTextNode('Death-day: ');
+        const pDeathDayText = document.createTextNode(data.deathDate);
+        spanDeathDay.appendChild(spanTextDeathDay);
         pDeathDay.appendChild(spanDeathDay);
-        pDeathDay.textContent += data.deathDate;
+        pDeathDay.appendChild(pDeathDayText);
         personDescription.appendChild(pDeathDay);
     }
 

@@ -198,91 +198,126 @@ function setMovieDetails(data) {
     document.getElementById('metacritic-rating').appendChild(ratingRateMeta);
 
     const movieDescription = document.querySelector('.movie-description');
+
     const pReleased = document.createElement('p');
     const spanReleased = document.createElement('span');
-    spanReleased.innerHTML = 'Released: ';
+    const spanTextReleased  = document.createTextNode('Released: ');
     let yourDate = new Date(data.releaseDate);
+    const pReleasedText = document.createTextNode(yourDate.toISOString().split('T')[0]);
+    spanReleased.appendChild(spanTextReleased);
     pReleased.appendChild(spanReleased);
-    pReleased.textContent += yourDate.toISOString().split('T')[0];
+    pReleased.appendChild(pReleasedText);
+
     movieDescription.appendChild(pReleased);
 
     const pRuntime = document.createElement('p');
     const spanRuntime = document.createElement('span');
-    spanRuntime.innerHTML = 'Runtime: ';
+    const spanText = document.createTextNode('Runtime: ');
+    const runtimeText = document.createTextNode(data.runtimeMins + 'min');
+
+    spanRuntime.appendChild(spanText);
     pRuntime.appendChild(spanRuntime);
-    pRuntime.textContent += data.runtimeMins + 'min';
+    pRuntime.appendChild(runtimeText);
+
     movieDescription.appendChild(pRuntime);
 
     const pDirectors = document.createElement('p');
     const spanDirectors = document.createElement('span');
-    spanDirectors.innerHTML = 'Directors: ';
-    pDirectors.appendChild(spanDirectors);
+    const spanTextDirectors  = document.createTextNode('Directors: ');
     const arrayOfDirectors = data.directorList.map((value) => {
         return value.name;
     });
-    pDirectors.textContent += arrayOfDirectors.toString().replaceAll(',', ', ');
+    const pDirectorsText = document.createTextNode(arrayOfDirectors.toString().replaceAll(',', ', '));
+    spanDirectors.appendChild(spanTextDirectors);
+    pDirectors.appendChild(spanDirectors);
+    pDirectors.appendChild(pDirectorsText);
+
     movieDescription.appendChild(pDirectors);
 
     const pWrites = document.createElement('p');
     const spanWriters = document.createElement('span');
-    spanWriters.innerHTML = 'Writers: ';
-    pWrites.appendChild(spanWriters);
+    const spanTextWriters  = document.createTextNode('Writers: ');
+
     const arrayOfWriters = data.writerList.map((value) => {
         return value.name;
     });
-    pWrites.textContent += arrayOfWriters.toString().replaceAll(',', ', ');
+    const pWritesText = document.createTextNode(arrayOfWriters.toString().replaceAll(',', ', '));
+    spanWriters.appendChild(spanTextWriters);
+    pWrites.appendChild(spanWriters);
+    pWrites.appendChild(pWritesText);
+
     movieDescription.appendChild(pWrites);
 
     const pStudious = document.createElement('p');
     const spanStudious = document.createElement('span');
-    spanStudious.innerHTML = 'Studious: ';
+    const spanTextStudious  = document.createTextNode('Studious: ');
+    const pStudiousText = document.createTextNode(data.companies);
+
+    spanStudious.appendChild(spanTextStudious);
     pStudious.appendChild(spanStudious);
-    pStudious.textContent += data.companies;
+    pStudious.appendChild(pStudiousText);
     movieDescription.appendChild(pStudious);
 
     const pGenres = document.createElement('p');
     const spanGenres = document.createElement('span');
-    spanGenres.innerHTML = 'Genres: ';
-    pGenres.appendChild(spanGenres);
+    const spanTextGenres  = document.createTextNode('Genres: ');
     const arrayOfGenres = data.genreList.map((value) => {
         return value.value;
     });
-    pGenres.textContent += arrayOfGenres.toString().replaceAll(',', ', ');
+    const pGenresText = document.createTextNode(arrayOfGenres.toString().replaceAll(',', ', '));
+    spanGenres.appendChild(spanTextGenres);
+    pGenres.appendChild(spanGenres);
+    pGenres.appendChild(pGenresText);
     movieDescription.appendChild(pGenres);
 
     const pAwards = document.createElement('p');
     const spanAwards = document.createElement('span');
-    spanAwards.innerHTML = 'Awards: ';
+    const spanTextAwards  = document.createTextNode('Awards: ');
+    const pAwardsText = document.createTextNode(data.awards);
+    spanAwards.appendChild(spanTextAwards);
     pAwards.appendChild(spanAwards);
-    pAwards.textContent += data.awards;
+    pAwards.appendChild(pAwardsText);
     movieDescription.appendChild(pAwards);
 
     const pCountry = document.createElement('p');
     const spanCountry = document.createElement('span');
-    spanCountry.innerHTML = 'Country: ';
+    const spanTextCountry  = document.createTextNode('Country: ');
+    const pCountryText = document.createTextNode(data.countries);
+
+    spanCountry.appendChild(spanTextCountry);
     pCountry.appendChild(spanCountry);
-    pCountry.textContent += data.countries;
+    pCountry.appendChild(pCountryText);
+
     movieDescription.appendChild(pCountry);
 
     const pBudget = document.createElement('p');
     const spanBudget = document.createElement('span');
-    spanBudget.innerHTML = 'Budget: ';
+    const spanTextBudget  = document.createTextNode('Budget: ');
+    const pBudgetText = document.createTextNode(data.boxOffice.budget);
+    spanBudget.appendChild(spanTextBudget);
     pBudget.appendChild(spanBudget);
-    pBudget.textContent += data.boxOffice.budget;
+    pBudget.appendChild(pBudgetText);
+
     movieDescription.appendChild(pBudget);
 
     const pOwUsa = document.createElement('p');
     const spanOwUsa = document.createElement('span');
-    spanOwUsa.innerHTML = 'Opening weekend USA: ';
+    const spanTextOwUsa  = document.createTextNode('Opening weekend USA: ');
+    const pOwUsaText = document.createTextNode(data.boxOffice.openingWeekendUSA);
+    spanOwUsa.appendChild(spanTextOwUsa);
     pOwUsa.appendChild(spanOwUsa);
-    pOwUsa.textContent += data.boxOffice.openingWeekendUSA;
+    pOwUsa.appendChild(pOwUsaText);
+
     movieDescription.appendChild(pOwUsa);
 
     const pCWG = document.createElement('p');
     const spanCWG = document.createElement('span');
-    spanCWG.innerHTML = 'Cumulative worldwide gross: ';
+    const spanTextCWG  = document.createTextNode('Cumulative worldwide gross: ');
+    const pCWGText = document.createTextNode(data.boxOffice.cumulativeWorldwideGross);
+    spanCWG.appendChild(spanTextCWG);
     pCWG.appendChild(spanCWG);
-    pCWG.textContent += data.boxOffice.cumulativeWorldwideGross;
+    pCWG.appendChild(pCWGText);
+
     movieDescription.appendChild(pCWG);
 
     const moviePlot = document.createElement('p');

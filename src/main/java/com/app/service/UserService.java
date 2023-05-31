@@ -70,31 +70,6 @@ public class UserService {
     }
 
     @Transactional
-    public int putUserChanges(UserFullSubmission userFullSubmission) {
-        Optional<User> user = userRepository.findById(userFullSubmission.id());
-        int countOfChangedFields = 0;
-        if (!passwordEncoder.matches(userFullSubmission.oldpassword(), user.get().getPassword())) {
-            throw new WrongPasswordException(""+user.get().getId());
-        }
-        if (Optional.ofNullable(userFullSubmission.username()).isPresent()) {
-            user.get().setUsername(userFullSubmission.username());
-            countOfChangedFields++;
-        }
-        if (Optional.ofNullable(userFullSubmission.email()).isPresent()) {
-            if (isEmailAlreadyInUse(userFullSubmission.email())) {
-                throw new UserAlreadyExistException(userFullSubmission.email());
-            }
-            user.get().setEmail(userFullSubmission.email());
-            countOfChangedFields++;
-        }
-        if (Optional.ofNullable(userFullSubmission.password()).isPresent()) {
-            user.get().setPassword(passwordEncoder.encode(userFullSubmission.password()));
-            countOfChangedFields++;
-        }
-        return countOfChangedFields;
-    }
-
-    @Transactional
     public UserPutDto toggleUserLikedMovie(UserPutDto userDto) {
         User user = verifyUserAction(userDto);
         Movie movie = verifyIdMovieExist(userDto.movieId());
@@ -150,6 +125,7 @@ public class UserService {
         }
         return user.get();
     }
+
     private Movie verifyIdMovieExist(String movieId) {
         Optional<Movie> movie = movieRepository.findById(IdMapper.getLongFromString(movieId));
         if (movie.isEmpty()) {
@@ -158,6 +134,7 @@ public class UserService {
         return movie.get();
     }
 
+    @Transactional(readOnly = true)
     public Set<MovieDto> getUsersLikedMovies(Long id) {
         Set<MovieDetails> movieDetails = movieDetailsRepository.findLikedMovieByUserId(id);
         if (movieDetails != null) {
@@ -167,6 +144,9 @@ public class UserService {
         }
         throw new EmptyResultFromDbCall("getUsersLikedMovies returns null");
     }
+
+    @Transactional(readOnly = true)
+
     public Set<MovieDto> getUsersIgnoredMovies(Long id) {
         Set<MovieDetails> movieDetails = movieDetailsRepository.findIgnoredMovieByUserId(id);
         if (movieDetails != null) {
@@ -176,6 +156,8 @@ public class UserService {
         }
         throw new EmptyResultFromDbCall("getUsersIgnoredMovies returns null");
     }
+
+    @Transactional(readOnly = true)
     public Set<MovieDto> getUsersWatchedMovies(Long id) {
         Set<MovieDetails> movieDetails = movieDetailsRepository.findWatchedMovieByUserId(id);
         if (movieDetails != null) {
@@ -186,6 +168,7 @@ public class UserService {
         throw new EmptyResultFromDbCall("getUsersWatchedMovies returns null");
     }
 
+    @Transactional(readOnly = true)
     public UserFullSubmission getUserDetails(UserFullSubmission userDto) {
         Optional<User> user = userRepository.findById(userDto.id());
         if (user.isEmpty()) {
@@ -195,5 +178,35 @@ public class UserService {
             return new UserFullSubmission(temp.id(), temp.username(), userDto.password(), temp.email(), temp.birthday(), temp.country(), "");
         }
         throw new WrongPasswordException(userDto.username() + " has sent a wrong password");
+    }
+
+    @Transactional
+    public int putUserChanges(UserFullSubmission userFullSubmission) {
+        Optional<User> user = userRepository.findById(userFullSubmission.id());
+        int countOfChangedFields = 0;
+        if (!passwordEncoder.matches(userFullSubmission.oldpassword(), user.get().getPassword())) {
+            throw new WrongPasswordException(""+user.get().getId());
+        }
+        if (Optional.ofNullable(userFullSubmission.username()).isPresent()) {
+            user.get().setUsername(userFullSubmission.username());
+            countOfChangedFields++;
+        }
+        if (Optional.ofNullable(userFullSubmission.email()).isPresent()) {
+            user.get().setEmail(userFullSubmission.email());
+            countOfChangedFields++;
+        }
+        if (Optional.ofNullable(userFullSubmission.password()).isPresent()) {
+            user.get().setPassword(passwordEncoder.encode(userFullSubmission.password()));
+            countOfChangedFields++;
+        }
+        if (Optional.ofNullable(userFullSubmission.country()).isPresent()) {
+            user.get().setCountry(userFullSubmission.country());
+            countOfChangedFields++;
+        }
+        if (Optional.ofNullable(userFullSubmission.birthday()).isPresent()) {
+            user.get().setBirthDay(userFullSubmission.birthday());
+            countOfChangedFields++;
+        }
+        return countOfChangedFields;
     }
 }

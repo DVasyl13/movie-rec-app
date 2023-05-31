@@ -127,19 +127,18 @@ public class MovieService {
         String genresStingify = genres.stream()
                 .limit(3)
                 .map(GenreDto::value)
+                .map(String::toLowerCase)
                 .collect(Collectors.joining(","));
-
-        System.out.println(genresStingify);
 
         String url = "https://ott-details.p.rapidapi.com/advancedsearch";
         String urlTemplate = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("start_year", "{1970}")
-                .queryParam("end_year", "{2022}")
-                .queryParam("genre", "{"+ genresStingify +"}")
-                .queryParam("language", "{english}")
-                .queryParam("type", "{movie}")
-                .queryParam("sort", "{latest}")
-                .queryParam("page", "{1}")
+                .queryParam("start_year", "1980")
+                .queryParam("min_imdb", "6.5")
+                .queryParam("genre", genresStingify)
+                .queryParam("language", "english")
+                .queryParam("type", "movie")
+                .queryParam("sort", "latest")
+                .queryParam("page", "1")
                 .encode()
                 .toUriString();
 
@@ -152,11 +151,11 @@ public class MovieService {
         ResponseEntity<RapidOTTResponse> response
                 = restTemplate.exchange(urlTemplate, HttpMethod.GET,entity, RapidOTTResponse.class);
         RapidOTTResponse ottResponse = response.getBody();
-        System.out.println(ottResponse);
         if (ottResponse != null) {
             return ottResponse.results()
                     .stream()
-                    .map(e -> new MovieSmallDto(e.imdbid(), IdMapper.getLongFromString(e.imdbid()), e.title(), e.imageurl()[0]))
+                    .filter(e -> e.imageurl().size() != 0)
+                    .map(e -> new MovieSmallDto(e.imdbid(), IdMapper.getLongFromString(e.imdbid()), e.title(), e.imageurl().get(0)))
                     .filter(e -> !ignoredMovies.contains(e.id()))
                     .limit(18)
                     .collect(Collectors.toSet());

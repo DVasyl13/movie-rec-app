@@ -20,6 +20,7 @@ function initPage() {
     document.getElementById('container').setAttribute('class', 'container');
     getDirectorBasedMovies();
     getSimilarBasedMovies();
+    getGenreBasedMovies();
 }
 
 async function getDirectorBasedMovies() {
@@ -32,4 +33,10 @@ async function getSimilarBasedMovies() {
     const response = await fetch('/api/v1/user/' + sessionStorage.getItem('id') + '/similar-based-movies');
     const responseBody = await response.json();
     fillExtendedMoviesMediaScroller(responseBody, 'similar-based-scroller','similar-based');
+}
+
+async function getGenreBasedMovies() {
+    const response = await fetch('/api/v1/user/' + sessionStorage.getItem('id') + '/genres-based-movies');
+    const responseBody = await response.json();
+    fillExtendedMoviesMediaScroller(responseBody, 'genres-based-scroller','genres-based');
 }
