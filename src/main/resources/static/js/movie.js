@@ -1,5 +1,5 @@
 import initializeHeader from "./header-initializer.js";
-import {fillCastMediaScroller, fillMovieMediaScroller} from "./media-scroller.js";
+import {fillCastMediaScroller, fillExtendedMoviesMediaScroller, fillMovieMediaScroller} from "./media-scroller.js";
 
 const ignoreBtn = document.getElementById("ignore-btn");
 const likeButton = document.getElementById("like-btn");
@@ -328,6 +328,6 @@ function setMovieDetails(data) {
     document.getElementById('movie-poster').src = data.image;
     document.getElementById('trailer-btn').href = data.trailer.link;
 
-    fillMovieMediaScroller(data.similars, 'movie-scroller','movie');
+    fillExtendedMoviesMediaScroller(data.similars, 'movie-scroller','movie');
     fillCastMediaScroller(data.actorList, 'cast');
 }

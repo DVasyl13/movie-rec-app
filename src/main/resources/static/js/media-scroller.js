@@ -7,7 +7,7 @@ function fillMovieMediaScroller(data,selector, groupName) {
     for (let i = 0; i < Math.ceil(data.length / groupSize); i++) {
         const group = document.createElement('div');
         group.setAttribute('class', 'media-group');
-        group.setAttribute('id', groupName + '-group-' + groupIndex);
+        group.setAttribute('id', ''+ groupName + '-group-' + groupIndex);
         if (index !== 0) {
             createScrollTag(groupIndex, group, 'groupName', 'previous');
         }
@@ -88,7 +88,7 @@ function fillExtendedMoviesMediaScroller(data, selector, groupName) {
     for (let i = 0; i < Math.ceil(data.length / groupSize); i++) {
         const group = document.createElement('div');
         group.setAttribute('class', 'media-group');
-        group.setAttribute('id', groupName+'-group-' + groupIndex);
+        group.setAttribute('id', ''+groupName+'-group-' + groupIndex);
         if (index !== 0) {
             createScrollTag(groupIndex, group, groupName, 'previous');
         }
@@ -129,17 +129,18 @@ function fillExtendedMoviesMediaScroller(data, selector, groupName) {
 function createScrollTag(groupIndex, group, groupName, direction) {
     const a = document.createElement('a');
     a.setAttribute('class', direction);
-    const svg = document.createElement('svg');
-    const use = document.createElement('use');
+    const span = document.createElement('span');
+    span.setAttribute('class', "material-symbols-outlined");
+
     if (direction === 'previous') {
         a.href = '#' + groupName + '-group-' + (groupIndex - 1);
+        span.innerHTML = 'arrow_back_ios';
     } else {
         a.href = '#' + groupName + '-group-' + (groupIndex + 1);
-        a.setAttribute('aria-label', direction)
+        a.setAttribute('aria-label', direction);
+        span.innerHTML = 'arrow_forward_ios';
     }
-    use.setAttribute('href', '#' + direction)
-    svg.appendChild(use);
-    a.appendChild(svg);
+    a.appendChild(span);
     group.appendChild(a);
 }
 

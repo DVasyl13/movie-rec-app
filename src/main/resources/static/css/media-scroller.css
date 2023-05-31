@@ -19,7 +19,7 @@
 }
 
 .media-group {
-    grid-auto-columns: 1fr;
+    grid-auto-columns: 15.5%;
     grid-gap: 15px;
 }
 
